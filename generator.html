@@ -222,6 +222,13 @@
   const nameInput = document.getElementById('name');
   const roleInput = document.getElementById('role');
   const photoInput = document.getElementById('photo-upload');
+  const previewContainer = document.getElementById('upload-preview-container');
+  const originalContent = previewContainer.innerHTML;
+
+  const REMOVE_BG_API_KEY = "2WmGDqurYTJo64YoEfVPEW6D";
+
+  let uploadedImgDataUrl = null;
+  let bgRemovalDone = false;
 
   function showNotification(message) {
     const existing = document.getElementById('validation-alert');
@@ -241,81 +248,233 @@
     setTimeout(() => alert.remove(), 5000);
   }
 
+  photoInput.addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) {
+      uploadedImgDataUrl = null;
+      bgRemovalDone = false;
+      previewContainer.innerHTML = originalContent;
+      return;
+    }
+
+    const fileSize = (file.size / 1024).toFixed(1) + ' KB';
+    uploadedImgDataUrl = null;
+    bgRemovalDone = false;
+
+    previewContainer.innerHTML = `
+      <div class="flex flex-col items-center gap-4 w-full">
+        <div class="w-24 h-24 rounded-full border-2 border-surface-container-lowest neo-shadow-lg flex items-center justify-center bg-tertiary-container relative overflow-hidden">
+          <span class="material-symbols-outlined text-4xl text-on-tertiary-container animate-[spin_2s_linear_infinite]">sync</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-center">
+          <span class="text-on-background font-bold uppercase tracking-wider text-sm">> REMOVING_BACKGROUND_API...</span>
+          <p class="text-on-surface-variant text-xs font-mono">${file.name} (${fileSize})</p>
+        </div>
+      </div>
+    `;
+
+    try {
+      const formData = new FormData();
+      formData.append('image_file', file);
+      formData.append('size', 'auto');
+
+      const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+        method: 'POST',
+        headers: {
+          'X-Api-Key': REMOVE_BG_API_KEY
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+
+      const resultBlob = await response.blob();
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        uploadedImgDataUrl = ev.target.result;
+        bgRemovalDone = true;
+
+        previewContainer.innerHTML = `
+          <div class="flex flex-col items-center gap-4 w-full">
+            <div class="w-32 h-32 rounded-full border-2 border-surface-container-lowest neo-shadow-lg bg-surface-container relative overflow-hidden">
+              <img src="${uploadedImgDataUrl}" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex flex-col items-center gap-1 text-center">
+              <span class="text-primary font-bold uppercase tracking-wider text-sm">> SUBJECT_ACQUIRED</span>
+              <p class="text-on-surface-variant text-xs font-mono">${file.name}</p>
+            </div>
+            <button type="button" onclick="location.reload()" class="text-secondary text-xs uppercase font-bold hover:underline">> RESET</button>
+          </div>
+        `;
+      };
+      reader.readAsDataURL(resultBlob);
+    } catch (err) {
+      console.error('Background removal failed:', err);
+      const fallbackReader = new FileReader();
+      fallbackReader.onload = function(ev) {
+        uploadedImgDataUrl = ev.target.result;
+        bgRemovalDone = true;
+        previewContainer.innerHTML = `
+          <div class="flex flex-col items-center gap-4 w-full">
+            <div class="w-32 h-32 rounded-full border-2 border-surface-container-lowest neo-shadow-lg overflow-hidden">
+              <img src="${uploadedImgDataUrl}" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex flex-col items-center gap-1 text-center">
+              <span class="text-secondary font-bold uppercase tracking-wider text-sm">> RAW_IMAGE_LOADED (API_FAILED)</span>
+              <p class="text-on-surface-variant text-xs font-mono">${err.message}</p>
+            </div>
+            <button type="button" onclick="location.reload()" class="text-primary text-xs uppercase font-bold hover:underline">> RESET</button>
+          </div>
+        `;
+      };
+      fallbackReader.readAsDataURL(file);
+    }
+  });
+
   btn.addEventListener('click', () => {
     const missing = [];
     if (!nameInput.value.trim()) missing.push('NAME');
     if (!roleInput.value.trim()) missing.push('ROLE');
-    if (!photoInput.files || photoInput.files.length === 0) missing.push('PHOTO');
+    if (!uploadedImgDataUrl && !bgRemovalDone) missing.push('PHOTO');
 
     if (missing.length > 0) {
-      showNotification(`Fill ${missing.join('/')} field`);
-    } else {
-      // Logic for successful generation would go here
-      console.log('Generating frame...');
+      showNotification(`ERR: MISSING [ ${missing.join(', ')} ]`);
+      return;
     }
-  });
-})();
-</script>
 
-<script class="">
-(function() {
-  const photoInput = document.getElementById('photo-upload');
-  const previewContainer = document.getElementById('upload-preview-container');
-  const originalContent = previewContainer.innerHTML;
-
-  photoInput.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        previewContainer.innerHTML = `
-          <div class="relative w-full h-32 flex items-center justify-center overflow-hidden rounded-DEFAULT">
-            <img src="${event.target.result}" class="w-full h-full object-cover opacity-80" />
-            <div class="absolute inset-0 flex items-center justify-center bg-surface-container/40 backdrop-blur-sm">
-              <span class="material-symbols-outlined text-white text-4xl">check_circle</span>
-            </div>
-          </div>
-          <p class="text-center text-label-sm uppercase tracking-wider">${file.name}</p>
-        `;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      previewContainer.innerHTML = originalContent;
+    if (!bgRemovalDone) {
+      showNotification('PROCESSING_IMAGE... PLEASE_WAIT');
+      return;
     }
+
+    btn.textContent = '[ GENERATING... ]';
+    btn.disabled = true;
+    
+    // Ensure fonts are loaded before drawing on canvas
+    document.fonts.ready.then(() => {
+      generateBadgeAndRedirect();
+    });
   });
-})();
-</script>
 
-<script>
-(function() {
-  const photoInput = document.getElementById('photo-upload');
-  const previewContainer = document.getElementById('upload-preview-container');
-  const originalContent = previewContainer.innerHTML;
+  function generateBadgeAndRedirect() {
+    const W = 800, H = 1200;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    
+    // Exact colors from the image
+    const bgDark = '#064E3B'; // Jungle Dark green
+    const bgLight = '#047857'; // Lighter green for gradient
+    const pink = '#EC4899'; // Bright pink for name and ribbons
+    const textShadow = '#022c22'; // Dark green/black for 3D text shadow
 
-  photoInput.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      const fileSize = (file.size / 1024).toFixed(1) + ' KB';
+    // 1. BACKGROUND (Radial Gradient for subtle lighting)
+    const gradient = ctx.createRadialGradient(W/2, H/3, 100, W/2, H/2, 800);
+    gradient.addColorStop(0, bgLight);
+    gradient.addColorStop(1, bgDark);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+
+    // 2. SUBTLE TECH PATTERN (faint lines)
+    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+    ctx.lineWidth = 2;
+    for(let i=0; i<W; i+=40) {
+      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i*1.5); ctx.lineTo(W, i*1.5); ctx.stroke();
+    }
+
+    // Prepare text values
+    const nameVal = nameInput.value.trim().toUpperCase();
+    const roleVal = roleInput.value.trim().toUpperCase();
+    
+    // 3. PHOTO LAYER (Large, bottom aligned)
+    const userImg = new Image();
+    userImg.onload = function() {
+      // Calculate photo dimensions to fill the bottom area
+      const imgAspect = userImg.width / userImg.height;
+      const targetW = W * 0.9; // Takes up 90% of width
+      const targetH = targetW / imgAspect;
       
-      reader.onload = function(event) {
-        previewContainer.innerHTML = `
-          <div class="flex flex-col items-center gap-4 w-full">
-            <div class="relative w-32 h-32 rounded-full overflow-hidden border-2 border-secondary neo-shadow">
-              <img src="${event.target.result}" class="w-full h-full object-cover" />
-            </div>
-            <div class="flex flex-col items-center gap-1">
-              <span class="text-secondary font-bold uppercase tracking-widest text-label-md">Uploaded Successfully!</span>
-              <p class="text-on-surface-variant text-label-sm">${file.name} (${fileSize})</p>
-            </div>
-            <button type="button" onclick="location.reload()" class="text-primary text-label-sm uppercase underline">Change Photo</button>
-          </div>
-        `;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      previewContainer.innerHTML = originalContent;
-    }
-  });
+      const imgX = (W - targetW) / 2;
+      const imgY = H - targetH + 50; // Push slightly down to align with bottom
+
+      ctx.drawImage(userImg, imgX, imgY, targetW, targetH);
+
+      // 4. HEADER TEXT (3D Extrusion Effect)
+      ctx.textAlign = 'center';
+      ctx.font = '800 80px "Bricolage Grotesque"';
+      
+      // Draw 3D shadow by drawing text multiple times
+      for(let i = 12; i >= 1; i--) {
+        ctx.fillStyle = textShadow;
+        ctx.fillText('HACKER HOUSE', W/2 + i, 160 + i);
+        ctx.fillText('GOA 2026', W/2 + i, 250 + i);
+      }
+      // Draw main text
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('HACKER HOUSE', W/2, 160);
+      ctx.fillText('GOA 2026', W/2, 250);
+
+      // 5. NAME & ROLE (Left aligned)
+      ctx.textAlign = 'left';
+      // Name in pink
+      ctx.font = '800 48px "Bricolage Grotesque"';
+      ctx.fillStyle = pink;
+      ctx.fillText(nameVal, 60, H / 2 - 40);
+      
+      // Role in white italic
+      ctx.font = 'italic 400 32px "JetBrains Mono"';
+      ctx.fillStyle = '#e2e8f0'; // Light slate
+      ctx.fillText(roleVal, 60, H / 2 + 10);
+
+      // 6. DIAGONAL RIBBONS
+      const ribbonText = `${nameVal} • ${roleVal} • ${nameVal} • ${roleVal} • ${nameVal} • ${roleVal}`;
+      ctx.font = '800 36px "Bricolage Grotesque"';
+      
+      function drawRibbon(yOffset) {
+        ctx.save();
+        ctx.translate(W/2, yOffset);
+        ctx.rotate(-10 * Math.PI / 180); // Tilt
+        
+        // Ribbon background
+        ctx.fillStyle = pink;
+        // Draw across the entire rotated canvas width
+        ctx.fillRect(-W, -40, W*2, 80);
+        
+        // Ribbon text
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        // Add a slight drop shadow to the text on the ribbon
+        ctx.shadowColor = 'rgba(0,0,0,0.3)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetY = 2;
+        ctx.fillText(ribbonText, 0, 5); // 5px nudge for vertical alignment
+        
+        ctx.restore();
+      }
+
+      // Draw top ribbon
+      drawRibbon(H - 300);
+      
+      // Draw bottom ribbon
+      drawRibbon(H - 120);
+
+      // SAVE
+      try {
+        sessionStorage.setItem('generatedBadge', canvas.toDataURL('image/png'));
+        sessionStorage.setItem('generatedBadgeName', nameVal);
+        window.location.href = 'success.html';
+      } catch (e) {
+        console.error(e);
+        btn.textContent = 'GENERATE';
+        btn.disabled = false;
+        alert('ERR: IMAGE_TOO_LARGE');
+      }
+    };
+    userImg.src = uploadedImgDataUrl;
+  }
 })();
 </script></body></html>
