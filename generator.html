@@ -359,113 +359,173 @@
   });
 
   function generateBadgeAndRedirect() {
-    const W = 800, H = 1200;
+    const W = 800, H = 1100;
     const canvas = document.createElement('canvas');
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext('2d');
     
-    // Exact colors from the image
-    const bgDark = '#064E3B'; // Jungle Dark green
-    const bgLight = '#047857'; // Lighter green for gradient
-    const pink = '#EC4899'; // Bright pink for name and ribbons
-    const textShadow = '#022c22'; // Dark green/black for 3D text shadow
+    // Design.md palette
+    const jungleDark = '#064E3B';       // jungle-dark
+    const primaryContainer = '#22c55e'; // primary-container
+    const secondaryContainer = '#fd56a7'; // secondary-container
+    const secondary = '#b4136d';        // secondary
+    const onSurface = '#131b2e';        // on-surface
+    const surfaceBright = '#faf8ff';    // surface-bright
+    const onPrimary = '#ffffff';        // on-primary
 
-    // 1. BACKGROUND (Radial Gradient for subtle lighting)
-    const gradient = ctx.createRadialGradient(W/2, H/3, 100, W/2, H/2, 800);
-    gradient.addColorStop(0, bgLight);
-    gradient.addColorStop(1, bgDark);
-    ctx.fillStyle = gradient;
+    // 1. DARK GREEN BACKGROUND
+    const grad = ctx.createRadialGradient(W/2, H*0.25, 60, W/2, H*0.5, H*0.9);
+    grad.addColorStop(0, '#059669');
+    grad.addColorStop(0.4, '#064E3B');
+    grad.addColorStop(1, '#022c22');
+    ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    // 2. SUBTLE TECH PATTERN (faint lines)
-    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
-    ctx.lineWidth = 2;
-    for(let i=0; i<W; i+=40) {
-      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, i*1.5); ctx.lineTo(W, i*1.5); ctx.stroke();
+    // 2. SUBTLE CIRCUIT-BOARD TRACES (organic tech lines, NOT a grid)
+    ctx.strokeStyle = 'rgba(34,197,94,0.12)';
+    ctx.lineWidth = 1.5;
+    // Horizontal traces
+    const traceYs = [60, 145, 280, 400, 550, 680, 800, 920, 1020];
+    traceYs.forEach(ty => {
+      ctx.beginPath();
+      let x = Math.random() * 100;
+      ctx.moveTo(x, ty);
+      while (x < W) {
+        const segLen = 30 + Math.random() * 80;
+        x += segLen;
+        ctx.lineTo(Math.min(x, W), ty);
+        if (Math.random() > 0.6) {
+          const turn = (Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 40);
+          ctx.lineTo(Math.min(x + 10, W), ty + turn);
+          ctx.moveTo(Math.min(x + 10, W), ty);
+        }
+      }
+      ctx.stroke();
+    });
+    // Vertical traces
+    const traceXs = [80, 200, 350, 500, 620, 720];
+    traceXs.forEach(tx => {
+      ctx.beginPath();
+      let y = Math.random() * 100;
+      ctx.moveTo(tx, y);
+      while (y < H) {
+        const segLen = 40 + Math.random() * 80;
+        y += segLen;
+        ctx.lineTo(tx, Math.min(y, H));
+        if (Math.random() > 0.6) {
+          const turn = (Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 30);
+          ctx.lineTo(tx + turn, Math.min(y + 10, H));
+          ctx.moveTo(tx, Math.min(y + 10, H));
+        }
+      }
+      ctx.stroke();
+    });
+    // Small circuit dots at intersections
+    ctx.fillStyle = 'rgba(34,197,94,0.15)';
+    for (let i = 0; i < 20; i++) {
+      const dx = 60 + Math.random() * (W - 120);
+      const dy = 60 + Math.random() * (H - 120);
+      ctx.beginPath(); ctx.arc(dx, dy, 3, 0, Math.PI * 2); ctx.fill();
     }
 
-    // Prepare text values
+    // 3. ROUNDED CARD BORDER (subtle green outline)
+    ctx.strokeStyle = 'rgba(34,197,94,0.3)';
+    ctx.lineWidth = 2.5;
+    const pad = 20, cr = 28;
+    ctx.beginPath();
+    ctx.moveTo(pad + cr, pad);
+    ctx.lineTo(W - pad - cr, pad);
+    ctx.quadraticCurveTo(W - pad, pad, W - pad, pad + cr);
+    ctx.lineTo(W - pad, H - pad - cr);
+    ctx.quadraticCurveTo(W - pad, H - pad, W - pad - cr, H - pad);
+    ctx.lineTo(pad + cr, H - pad);
+    ctx.quadraticCurveTo(pad, H - pad, pad, H - pad - cr);
+    ctx.lineTo(pad, pad + cr);
+    ctx.quadraticCurveTo(pad, pad, pad + cr, pad);
+    ctx.closePath();
+    ctx.stroke();
+
     const nameVal = nameInput.value.trim().toUpperCase();
     const roleVal = roleInput.value.trim().toUpperCase();
-    
-    // 3. PHOTO LAYER (Large, bottom aligned)
+
+    // 4. PHOTO (large, centered, bottom-aligned)
     const userImg = new Image();
     userImg.onload = function() {
-      // Calculate photo dimensions to fill the bottom area
       const imgAspect = userImg.width / userImg.height;
-      const targetW = W * 0.9; // Takes up 90% of width
-      const targetH = targetW / imgAspect;
-      
-      const imgX = (W - targetW) / 2;
-      const imgY = H - targetH + 50; // Push slightly down to align with bottom
-
-      ctx.drawImage(userImg, imgX, imgY, targetW, targetH);
-
-      // 4. HEADER TEXT (3D Extrusion Effect)
-      ctx.textAlign = 'center';
-      ctx.font = '800 80px "Bricolage Grotesque"';
-      
-      // Draw 3D shadow by drawing text multiple times
-      for(let i = 12; i >= 1; i--) {
-        ctx.fillStyle = textShadow;
-        ctx.fillText('HACKER HOUSE', W/2 + i, 160 + i);
-        ctx.fillText('GOA 2026', W/2 + i, 250 + i);
+      let drawH = H * 0.75;
+      let drawW = drawH * imgAspect;
+      if (drawW > W * 0.95) {
+        drawW = W * 0.95;
+        drawH = drawW / imgAspect;
       }
-      // Draw main text
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('HACKER HOUSE', W/2, 160);
-      ctx.fillText('GOA 2026', W/2, 250);
+      const imgX = (W - drawW) / 2;
+      const imgY = H - drawH + 10;
+      ctx.drawImage(userImg, imgX, imgY, drawW, drawH);
 
-      // 5. NAME & ROLE (Left aligned)
+      // 5. HEADER: "HACKER HOUSE GOA 2026" with 3D extrusion
+      ctx.textAlign = 'center';
+      ctx.font = '800 72px "Bricolage Grotesque"';
+      
+      // 3D shadow layers (offset to bottom-right)
+      for (let i = 8; i >= 1; i--) {
+        ctx.fillStyle = '#022c22';
+        ctx.fillText('HACKER HOUSE', W/2 + i * 0.9, 110 + i * 0.9);
+        ctx.fillText('GOA 2026', W/2 + i * 0.9, 190 + i * 0.9);
+      }
+      // Main white text
+      ctx.fillStyle = onPrimary;
+      ctx.fillText('HACKER HOUSE', W/2, 110);
+      ctx.fillText('GOA 2026', W/2, 190);
+
+      // 6. NAME & ROLE (left-aligned)
       ctx.textAlign = 'left';
+      
       // Name in pink
-      ctx.font = '800 48px "Bricolage Grotesque"';
-      ctx.fillStyle = pink;
-      ctx.fillText(nameVal, 60, H / 2 - 40);
+      ctx.font = '800 40px "Bricolage Grotesque"';
+      ctx.fillStyle = 'rgba(0,0,0,0.4)';
+      ctx.fillText(nameVal, 52, 370);
+      ctx.fillStyle = secondaryContainer;
+      ctx.fillText(nameVal, 50, 368);
       
       // Role in white italic
-      ctx.font = 'italic 400 32px "JetBrains Mono"';
-      ctx.fillStyle = '#e2e8f0'; // Light slate
-      ctx.fillText(roleVal, 60, H / 2 + 10);
+      ctx.font = 'italic 400 24px "JetBrains Mono"';
+      ctx.fillStyle = 'rgba(0,0,0,0.3)';
+      ctx.fillText(roleVal, 52, 404);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(roleVal, 50, 402);
 
-      // 6. DIAGONAL RIBBONS
-      const ribbonText = `${nameVal} • ${roleVal} • ${nameVal} • ${roleVal} • ${nameVal} • ${roleVal}`;
-      ctx.font = '800 36px "Bricolage Grotesque"';
+      // 7. DIAGONAL RIBBONS (two pink sashes)
+      const ribbonText = (nameVal + ' • ' + roleVal + ' • ').repeat(8);
       
-      function drawRibbon(yOffset) {
+      function drawRibbon(yCenter, angle) {
         ctx.save();
-        ctx.translate(W/2, yOffset);
-        ctx.rotate(-10 * Math.PI / 180); // Tilt
+        ctx.translate(W / 2, yCenter);
+        ctx.rotate(angle * Math.PI / 180);
         
-        // Ribbon background
-        ctx.fillStyle = pink;
-        // Draw across the entire rotated canvas width
-        ctx.fillRect(-W, -40, W*2, 80);
+        // Ribbon bg
+        ctx.fillStyle = secondaryContainer;
+        ctx.fillRect(-W * 2, -30, W * 4, 60);
         
         // Ribbon text
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = onPrimary;
+        ctx.font = '800 24px "Bricolage Grotesque"';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        // Add a slight drop shadow to the text on the ribbon
-        ctx.shadowColor = 'rgba(0,0,0,0.3)';
-        ctx.shadowBlur = 4;
-        ctx.shadowOffsetY = 2;
-        ctx.fillText(ribbonText, 0, 5); // 5px nudge for vertical alignment
+        ctx.fillText(ribbonText, 0, 0);
         
         ctx.restore();
       }
 
-      // Draw top ribbon
-      drawRibbon(H - 300);
+      // First ribbon: across belly/waist area of the photo
+      drawRibbon(H * 0.68, -10);
       
-      // Draw bottom ribbon
-      drawRibbon(H - 120);
+      // Second ribbon: near the bottom
+      drawRibbon(H * 0.88, -10);
 
-      // SAVE
+      // SAVE & REDIRECT
       try {
         sessionStorage.setItem('generatedBadge', canvas.toDataURL('image/png'));
-        sessionStorage.setItem('generatedBadgeName', nameVal);
+        sessionStorage.setItem('generatedBadgeName', nameInput.value.trim());
         window.location.href = 'success.html';
       } catch (e) {
         console.error(e);
