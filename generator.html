@@ -1,296 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Hacker House Goa 2026 - Frame Generator</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
-    <script id="tailwind-config">
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        /* ── Jungle Pulse design tokens (light mode) ── */
-                        "surface":                   "#faf8ff",
-                        "surface-dim":               "#d2d9f4",
-                        "surface-container-lowest":  "#ffffff",
-                        "surface-container-low":     "#f2f3ff",
-                        "surface-container":         "#eaedff",
-                        "surface-container-high":    "#e2e7ff",
-                        "surface-container-highest": "#dae2fd",
-                        "on-surface":                "#131b2e",
-                        "on-surface-variant":        "#3d4a3d",
-                        "outline":                   "#6d7b6c",
-                        "outline-variant":           "#bccbb9",
-                        "primary":                   "#006e2f",
-                        "on-primary":                "#ffffff",
-                        "primary-container":         "#22c55e",
-                        "on-primary-container":      "#004b1e",
-                        "primary-fixed":             "#6bff8f",
-                        "secondary":                 "#b4136d",
-                        "on-secondary":              "#ffffff",
-                        "secondary-container":       "#fd56a7",
-                        "tertiary":                  "#785a00",
-                        "tertiary-container":        "#d7a400",
-                        "on-tertiary":               "#ffffff",
-                        "background":                "#faf8ff",
-                        "on-background":             "#131b2e",
-                        "jungle-dark":               "#064E3B",
-                        "electric-cyan":             "#06B6D4",
-                        "paper-white":               "#F8FAFC",
-                        "ink":                       "#0F172A",
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.25rem",
-                        lg:      "0.5rem",
-                        xl:      "0.75rem",
-                        full:    "9999px",
-                    },
-                    spacing: {
-                        "border-width":    "3px",
-                        "margin-mobile":   "16px",
-                        "gutter":          "24px",
-                        "margin-desktop":  "48px",
-                        "base":            "8px",
-                    },
-                    fontFamily: {
-                        display: ["'Bricolage Grotesque'", "sans-serif"],
-                        mono:    ["'JetBrains Mono'", "monospace"],
-                    },
-                }
-            }
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Hacker House Goa 2026 - Frame Generator</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+    rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            /* ── Jungle Pulse design tokens (light mode) ── */
+            "surface": "#faf8ff",
+            "surface-dim": "#d2d9f4",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f2f3ff",
+            "surface-container": "#eaedff",
+            "surface-container-high": "#e2e7ff",
+            "surface-container-highest": "#dae2fd",
+            "on-surface": "#131b2e",
+            "on-surface-variant": "#3d4a3d",
+            "outline": "#6d7b6c",
+            "outline-variant": "#bccbb9",
+            "primary": "#006e2f",
+            "on-primary": "#ffffff",
+            "primary-container": "#22c55e",
+            "on-primary-container": "#004b1e",
+            "primary-fixed": "#6bff8f",
+            "secondary": "#b4136d",
+            "on-secondary": "#ffffff",
+            "secondary-container": "#fd56a7",
+            "tertiary": "#785a00",
+            "tertiary-container": "#d7a400",
+            "on-tertiary": "#ffffff",
+            "background": "#faf8ff",
+            "on-background": "#131b2e",
+            "jungle-dark": "#064E3B",
+            "electric-cyan": "#06B6D4",
+            "paper-white": "#F8FAFC",
+            "ink": "#0F172A",
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px",
+          },
+          spacing: {
+            "border-width": "3px",
+            "margin-mobile": "16px",
+            "gutter": "24px",
+            "margin-desktop": "48px",
+            "base": "8px",
+          },
+          fontFamily: {
+            display: ["'Bricolage Grotesque'", "sans-serif"],
+            mono: ["'JetBrains Mono'", "monospace"],
+          },
         }
-    </script>
-    <style>
-        body { font-family: 'JetBrains Mono', monospace; }
-
-        .neo-shadow    { box-shadow: 4px 4px 0 0 #0F172A; }
-        .neo-shadow-lg { box-shadow: 6px 6px 0 0 #0F172A; }
-        .neo-shadow-sm { box-shadow: 3px 3px 0 0 #0F172A; }
-
-        .btn-press:hover  { box-shadow: 2px 2px 0 0 #0F172A; transform: translate(2px,2px); }
-        .btn-press:active { box-shadow: none;                 transform: translate(4px,4px); }
-        .btn-press { transition: box-shadow .1s, transform .1s; }
-
-        .diagonal-sash {
-            background-color: #b4136d;
-            color: #fff;
-            transform: rotate(-8deg);
-            width: 130%; left: -15%;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to   { transform: rotate(360deg); }
-        }
-        @keyframes fadeIn {
-            from { opacity:0; transform: translateY(6px); }
-            to   { opacity:1; transform: translateY(0); }
-        }
-        .fade-in { animation: fadeIn .4s ease forwards; }
-    </style>
-</head>
-<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen relative dark" data-mode="connect">
-<!-- Background Images -->
-<div class="fixed inset-0 z-0 pointer-events-none opacity-50">
-<div class="absolute inset-0 bg-cover bg-center w-full h-full" data-alt="A stylized graphic illustration of a vibrant tropical sunrise over the ocean, with geometric sun rays and palm tree silhouettes. Vector art style." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCUxJWwphMjLrz6h3fabvBtTbx5f63mzdHbWO76LWzp3unO-UapeTujmV1MkId8nETpCxb8zZ0pJPCJKHClrZ28Et7lfyh45Z-uJ36e_PFYt3hBhDNvrpiyLPOwpLaC1q5k8YfNoOlsevAFc9QoG4QScAW8q8wwHshioT3NZQo6qtmDS-8E0lkvXgYLxVTSOF-VqWP2av0VzuVjU8VsBA1VMK2WMSMMEIS0M0mOdsqRn3NlIlFcNuyEsVDT25635LBy5KU&quot;); background-size: cover; background-position: center center; background-attachment: fixed;"></div>
-</div>
-<div class="fixed inset-0 z-0 pointer-events-none mix-blend-multiply opacity-50 hidden md:block">
-<div class="absolute inset-0 bg-cover bg-center w-full h-full" data-alt="Stylized palm tree silhouettes framing the edges of the composition in deep jungle green, with subtle line-art details." style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLvcz7nxRhfyjQEmYI-IJauBx2p3rpms8Z_rj9LdT60U0p04akH7OnpgfI_oJsfDdImyc0o07aXdqOoYwGfP4fJC9ReTcB5x4jdK7yTxRSaWDXxyPxGgfsuJeUduH-qAivHoPORJMPAy8k78yeO7JsFzp4EIAHB_EPocl_FdtOcrYar-lb9FzSnijziBL8GKQfZCcVaflINJpbM607HlsKjRvIKJrr6kQQfYEZVScmBVQTOmzBL3pxxMtVgE')"></div>
-</div>
-<!-- Decorative Ribbon -->
-<div class="absolute top-32 left-0 w-full overflow-hidden pointer-events-none z-0">
-<div class="diagonal-sash py-3 border-y-border-width border-surface-container-lowest text-surface-container-lowest font-headline-lg-mobile font-bold uppercase tracking-widest shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex justify-center items-center">
-<div class=""><span class="">HACKER HOUSE GOA 2026</span><span class="">★</span><span class="">BUILD THE FUTURE</span></div>
-</div>
-</div>
-<!-- TopAppBar -->
-<header class="bg-surface-container/80 backdrop-blur-md border-b-border-width border-surface-container-lowest shadow-[4px_4px_0px_0px_#0f0e0a] flex justify-between items-center px-margin-mobile h-20 w-full z-50 docked full-width top-0 sticky">
-<div class="flex items-center gap-4">
-<button class="text-primary hover:bg-primary-container transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 rounded-DEFAULT border-2 border-transparent">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
-</button>
-<a href="index.html" class="flex items-center gap-3"><div class="relative flex items-center h-12">
-<img alt="Hacker House" class="h-10 md:h-12 object-contain filter invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMUh722k4Z_MNFtB_p66AqxJLw1SG7JpHG4yQfzvrbJYDwp9ejozJQuaKpHFfxmK1a1ldLtlELA1NQmKd8RCX-cFoIeB4zIj4ywhoFGzL7IzoZt1CqUTRIFd-PI57bwdRcxpf8Xf7-KVFAnU6lB_Qiw_5VX7y9OhPYnyZ61B9uR7nxK0hDyRW30albp1xWIzNZaq9lAk96Bta7_vsKUY84sQiTGN_pzupwmKgQ1UqWZsDyAxc8LhRJDNBHA17Yd0_HI5U">
-<div class="absolute -right-4 -top-2 w-12 h-12 md:w-14 md:h-14 bg-secondary-container border-2 border-surface-container-lowest rounded-full p-1 neo-shadow flex items-center justify-center rotate-12 z-10">
-<div class="w-full h-full flex items-center justify-center"><img alt="Goa" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAArusKEqWI7kIa2dnDtjlZe0UM-y4vP0ZNjCd6MW91VfrI-axULrzO1ce9GhtHnsvPYTBoaoP7Avdd_K60lL_yKDvlGLJ5bu3hy38oIv9vtrtjucvdm-bbufq8IgPPpeYh6nEIg6CijMI8A7FR_BoTkupjQgyDV_O9mB8v6xqN4RNQ_jf8goEU61fvvVPNKidIIcLzVqntnkB2tfmbHgcCO2eUPFxls8Ky6Z_D5W9FL5NXFvYWuJkhSjIwAnJUJ8rd3Sw"></div>
-</div>
-</div></a>
-</div>
-<div>
-<div class="w-12 h-12 flex items-center justify-center"><img alt="2:47PM Studio Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0zdQVZpFll416s6G5lM4AR3hq2mb3HdI88HhgZz3n1O9xmlxIxp8ZNmCnRg6MkflfEKg8NBxr5ntaHVlUig5-s6fCZp12v3jV0e0Kupr1VBQVX3THzA-tO1mr65HcpyjbKrj6AjZHoRZeEefMesLMqbAgeJPkO28QSvQjFxpPMrASnopGPZeNzi61cuh8Xqb_-ZtkIbapEAFO5WxXhGki1IIeuWnkHbZoa3v6nnD_2GwBcSIUWjBCEmwW7JyxKzKoT8I"></div>
-</div>
-</header>
-<!-- Main Content -->
-<main class="relative z-10 container mx-auto px-margin-mobile md:px-margin-desktop md:py-16 max-w-7xl flex flex-col md:flex-row gap-8 lg:gap-16 pb-32 md:pb-16 backdrop-blur-md rounded-xl border-border-width border-surface-container-lowest neo-shadow-lg bg-surface/10 py-4 mt-12" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);"><div class="w-full max-w-2xl mx-auto flex flex-col gap-8 pt-8">
-<div class="flex flex-col gap-2">
-<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background uppercase tracking-wider">Frame Generator</h1>
-<p class="text-on-surface-variant font-body-md">Customize your Hacker House Goa 2026 profile frame.</p>
-</div>
-<form class="flex flex-col gap-6">
-<div class="flex flex-col gap-2">
-<label class="font-label-md text-on-background uppercase tracking-wider" for="name">Name</label>
-<input class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" id="name" placeholder="Enter your name" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" type="text">
-</div>
-<div class="flex flex-col gap-2">
-<label class="font-label-md text-on-background uppercase tracking-wider" for="role">Role</label>
-<input class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" id="role" placeholder="e.g. Fullstack Developer" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" type="text">
-</div>
-<div class="flex flex-col gap-2">
-  <label class="font-label-md text-on-background uppercase tracking-wider" for="photo-upload">UPLOAD PHOTO</label>
-  <div class="relative group cursor-pointer">
-    <input type="file" id="photo-upload" class="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer" accept="image/jpeg, image/png, image/heic" style="appearance: none; -webkit-appearance: none; cursor: pointer;">
-    <div class="backdrop-blur-md border-2 border-dashed border-surface-container-lowest p-8 rounded-DEFAULT text-primary-fixed font-body-md flex flex-col items-center justify-center gap-3 neo-shadow-input transition-all bg-surface-container/20" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" id="upload-preview-container">
-      <span class="material-symbols-outlined text-4xl">cloud_upload</span>
-      <p class="text-center">Drop your photo or click to browse</p>
-    </div>
-  </div>
-</div><button type="button" class="w-full bg-secondary text-on-secondary border-border-width border-surface-container-lowest py-6 font-label-md font-bold uppercase tracking-widest neo-shadow-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2 mb-8" id="generate-btn">GENERATE</button>
-
-<body class="bg-paper-white text-ink font-mono overflow-x-hidden min-h-screen relative selection:bg-primary-container selection:text-ink">
-
-<!-- Background Pattern -->
-<div class="fixed inset-0 z-0 pointer-events-none" style="background-image: radial-gradient(#d2d9f4 1px, transparent 1px); background-size: 24px 24px;"></div>
-
-<!-- Decorative Ribbon -->
-<div class="absolute top-24 left-0 w-full overflow-hidden pointer-events-none z-0">
-    <div class="diagonal-sash py-3 border-y-[3px] border-ink font-display text-2xl uppercase tracking-widest neo-shadow-sm flex justify-center items-center">
-        <div class="marquee-container w-full">
-            <div class="marquee-content">
-                <span>HACKER HOUSE GOA 2026 ★ BUILD THE FUTURE ★ JUNGLE PULSE ★ </span>
-                <span>HACKER HOUSE GOA 2026 ★ BUILD THE FUTURE ★ JUNGLE PULSE ★ </span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- TopAppBar -->
-<header class="bg-surface border-b-[3px] border-ink neo-shadow-sm flex justify-between items-center px-4 h-20 w-full z-50 sticky top-0">
-    <div class="flex items-center gap-4">
-        <a href="index.html" class="flex items-center gap-3 btn-press">
-            <div class="relative flex items-center h-12 bg-primary px-4 py-2 border-[3px] border-ink rounded">
-                <span class="font-display font-bold text-on-primary text-xl tracking-tight uppercase">Jungle<br/>Pulse</span>
-                <div class="absolute -right-4 -top-3 w-12 h-12 bg-tertiary-container border-[3px] border-ink rounded-full p-1 neo-shadow-sm flex items-center justify-center rotate-[12deg] z-10">
-                    <span class="font-display font-black text-ink text-sm">GOA</span>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="w-12 h-12 flex items-center justify-center bg-secondary-container border-[3px] border-ink rounded-full neo-shadow-sm rotate-[-5deg]">
-        <span class="material-symbols-outlined text-ink font-bold">bolt</span>
-    </div>
-</header>
-
-<!-- Main Content -->
-<main class="relative z-10 container mx-auto px-4 md:px-8 max-w-5xl flex flex-col md:flex-row gap-8 lg:gap-16 pb-32 md:pb-16 pt-32">
-    
-    <div class="w-full max-w-2xl mx-auto flex flex-col gap-8 bg-surface border-[3px] border-ink rounded-lg neo-shadow-lg p-6 md:p-10 fade-in">
-        
-        <div class="flex flex-col gap-2 relative">
-            <div class="absolute -top-12 -left-6 bg-secondary-container text-ink border-[3px] border-ink px-4 py-1 rounded-sm rotate-[-3deg] neo-shadow-sm">
-                <span class="font-display font-bold uppercase text-sm">Step 1</span>
-            </div>
-            <h1 class="font-display text-4xl md:text-5xl text-ink uppercase tracking-tight font-extrabold">Generate ID</h1>
-            <p class="text-on-surface-variant font-mono text-sm uppercase font-bold tracking-wider">> ENTER_CREDENTIALS</p>
-        </div>
-
-        <form class="flex flex-col gap-6">
-            <div class="flex flex-col gap-2">
-                <label class="font-mono text-ink font-bold uppercase tracking-wider text-sm">>_ NAME</label>
-                <input class="bg-surface-container-lowest border-[3px] border-ink p-4 rounded text-ink font-mono focus:outline-none focus:ring-0 focus:border-primary neo-shadow-sm transition-colors" id="name" placeholder="YOUR NAME" type="text">
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <label class="font-mono text-ink font-bold uppercase tracking-wider text-sm">>_ ROLE</label>
-                <input class="bg-surface-container-lowest border-[3px] border-ink p-4 rounded text-ink font-mono focus:outline-none focus:ring-0 focus:border-primary neo-shadow-sm transition-colors" id="role" placeholder="e.g. FULLSTACK ENGINEER" type="text">
-            </div>
-
-            <div class="flex flex-col gap-2 mt-4">
-                <label class="font-mono text-ink font-bold uppercase tracking-wider text-sm">>_ UPLOAD_PHOTO</label>
-                <div class="relative group cursor-pointer">
-                    <input type="file" id="photo-upload" class="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer" accept="image/jpeg, image/png, image/heic">
-                    <div class="bg-surface-container-low border-[3px] border-dashed border-ink p-8 rounded text-ink font-mono flex flex-col items-center justify-center gap-3 transition-colors group-hover:bg-surface-container" id="upload-preview-container">
-                        <div class="w-16 h-16 bg-primary-container border-[3px] border-ink rounded-full flex items-center justify-center neo-shadow-sm mb-2">
-                            <span class="material-symbols-outlined text-3xl text-ink">add_photo_alternate</span>
-                        </div>
-                        <p class="text-center font-bold uppercase">Click to Browse</p>
-                        <p class="text-center text-xs opacity-70">JPG, PNG, HEIC</p>
-                    </div>
-                </div>
-            </div>
-
-            <button type="button" class="mt-6 w-full bg-primary-container text-ink border-[3px] border-ink py-5 font-display font-bold text-xl uppercase tracking-widest btn-press neo-shadow flex justify-center items-center gap-2 rounded" id="generate-btn">
-                [ GENERATE_BADGE ]
-            </button>
-        </form>
-
-    </div>
-</main>
-
-<script type="module">
-(function() {
-  const btn = document.getElementById('generate-btn');
-  const nameInput = document.getElementById('name');
-  const roleInput = document.getElementById('role');
-  const photoInput = document.getElementById('photo-upload');
-  const previewContainer = document.getElementById('upload-preview-container');
-  const originalContent = previewContainer.innerHTML;
-
-  let removeBgFn = null;
-  import('https://esm.run/@imgly/background-removal').then(mod => {
-    removeBgFn = mod.removeBackground;
-  }).catch(err => {
-    console.warn('Background removal library failed to load:', err);
-  });
-
-  let uploadedImgDataUrl = null;
-  let bgRemovalDone = false;
-
-  photoInput.addEventListener('change', async function(e) {
-    const file = e.target.files[0];
-    if (!file) {
-      uploadedImgDataUrl = null;
-      bgRemovalDone = false;
-      previewContainer.innerHTML = originalContent;
-      return;
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    const fileSize = (file.size / 1024).toFixed(1) + ' KB';
-    uploadedImgDataUrl = null;
-    bgRemovalDone = false;
+    .neo-shadow {
+      box-shadow: 4px 4px 0 0 #0F172A;
+    }
 
-    previewContainer.innerHTML = `
+    .neo-shadow-lg {
+      box-shadow: 6px 6px 0 0 #0F172A;
+    }
+
+    .neo-shadow-sm {
+      box-shadow: 3px 3px 0 0 #0F172A;
+    }
+
+    .btn-press:hover {
+      box-shadow: 2px 2px 0 0 #0F172A;
+      transform: translate(2px, 2px);
+    }
+
+    .btn-press:active {
+      box-shadow: none;
+      transform: translate(4px, 4px);
+    }
+
+    .btn-press {
+      transition: box-shadow .1s, transform .1s;
+    }
+
+    .diagonal-sash {
+      background-color: #b4136d;
+      color: #fff;
+      transform: rotate(-8deg);
+      width: 130%;
+      left: -15%;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn .4s ease forwards;
+    }
+  </style>
+</head>
+
+
+        <body
+          class="bg-paper-white text-ink font-mono overflow-x-hidden min-h-screen relative selection:bg-primary-container selection:text-ink">
+
+          <!-- Background Pattern -->
+          <div class="fixed inset-0 z-0 pointer-events-none"
+            style="background-image: radial-gradient(#d2d9f4 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+          <!-- Decorative Ribbon -->
+          <div class="absolute top-24 left-0 w-full overflow-hidden pointer-events-none z-0">
+            <div
+              class="diagonal-sash py-3 border-y-[3px] border-ink font-display text-2xl uppercase tracking-widest neo-shadow-sm flex justify-center items-center">
+              <div class="marquee-container w-full">
+                <div class="marquee-content">
+                  <span>HACKER HOUSE GOA 2026 ★ BUILD THE FUTURE ★ JUNGLE PULSE ★ </span>
+                  <span>HACKER HOUSE GOA 2026 ★ BUILD THE FUTURE ★ JUNGLE PULSE ★ </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TopAppBar -->
+          <header
+            class="bg-surface border-b-[3px] border-ink neo-shadow-sm flex justify-between items-center px-4 h-20 w-full z-50 sticky top-0">
+            <div class="flex items-center gap-4">
+              <a href="index.html" class="flex items-center gap-3 btn-press">
+                <div class="relative flex items-center h-12 bg-primary px-4 py-2 border-[3px] border-ink rounded">
+                  <span
+                    class="font-display font-bold text-on-primary text-xl tracking-tight uppercase">Jungle<br />Pulse</span>
+                  <div
+                    class="absolute -right-4 -top-3 w-12 h-12 bg-tertiary-container border-[3px] border-ink rounded-full p-1 neo-shadow-sm flex items-center justify-center rotate-[12deg] z-10">
+                    <span class="font-display font-black text-ink text-sm">GOA</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-secondary-container border-[3px] border-ink rounded-full neo-shadow-sm rotate-[-5deg]">
+              <span class="material-symbols-outlined text-ink font-bold">bolt</span>
+            </div>
+          </header>
+
+          <!-- Main Content -->
+          <main
+            class="relative z-10 container mx-auto px-4 md:px-8 max-w-5xl flex flex-col md:flex-row gap-8 lg:gap-16 pb-32 md:pb-16 pt-32">
+
+            <div
+              class="w-full max-w-2xl mx-auto flex flex-col gap-8 bg-surface border-[3px] border-ink rounded-lg neo-shadow-lg p-6 md:p-10 fade-in">
+
+              <div class="flex flex-col gap-2 relative">
+                <div
+                  class="absolute -top-12 -left-6 bg-secondary-container text-ink border-[3px] border-ink px-4 py-1 rounded-sm rotate-[-3deg] neo-shadow-sm">
+                  <span class="font-display font-bold uppercase text-sm">Step 1</span>
+                </div>
+                <h1 class="font-display text-4xl md:text-5xl text-ink uppercase tracking-tight font-extrabold">Generate
+                  ID</h1>
+                <p class="text-on-surface-variant font-mono text-sm uppercase font-bold tracking-wider">>
+                  ENTER_CREDENTIALS</p>
+              </div>
+
+              <form class="flex flex-col gap-6">
+                <div class="flex flex-col gap-2">
+                  <label class="font-mono text-ink font-bold uppercase tracking-wider text-sm">>_ NAME</label>
+                  <input
+                    class="bg-surface-container-lowest border-[3px] border-ink p-4 rounded text-ink font-mono focus:outline-none focus:ring-0 focus:border-primary neo-shadow-sm transition-colors"
+                    id="name" placeholder="YOUR NAME" type="text">
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <label class="font-mono text-ink font-bold uppercase tracking-wider text-sm">>_ ROLE</label>
+                  <input
+                    class="bg-surface-container-lowest border-[3px] border-ink p-4 rounded text-ink font-mono focus:outline-none focus:ring-0 focus:border-primary neo-shadow-sm transition-colors"
+                    id="role" placeholder="e.g. FULLSTACK ENGINEER" type="text">
+                </div>
+
+                <div class="flex flex-col gap-2 mt-4">
+                  <label class="font-mono text-ink font-bold uppercase tracking-wider text-sm">>_ UPLOAD_PHOTO</label>
+                  <div class="relative group cursor-pointer">
+                    <input type="file" id="photo-upload"
+                      class="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer"
+                      accept="image/jpeg, image/png, image/heic">
+                    <div
+                      class="bg-surface-container-low border-[3px] border-dashed border-ink p-8 rounded text-ink font-mono flex flex-col items-center justify-center gap-3 transition-colors group-hover:bg-surface-container"
+                      id="upload-preview-container">
+                      <div
+                        class="w-16 h-16 bg-primary-container border-[3px] border-ink rounded-full flex items-center justify-center neo-shadow-sm mb-2">
+                        <span class="material-symbols-outlined text-3xl text-ink">add_photo_alternate</span>
+                      </div>
+                      <p class="text-center font-bold uppercase">Click to Browse</p>
+                      <p class="text-center text-xs opacity-70">JPG, PNG, HEIC</p>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="button"
+                  class="mt-6 w-full bg-primary-container text-ink border-[3px] border-ink py-5 font-display font-bold text-xl uppercase tracking-widest btn-press neo-shadow flex justify-center items-center gap-2 rounded"
+                  id="generate-btn">
+                  [ GENERATE_BADGE ]
+                </button>
+              </form>
+
+            </div>
+          </main>
+
+          <script type="module">
+          (function () {
+            const btn = document.getElementById('generate-btn');
+            const nameInput = document.getElementById('name');
+            const roleInput = document.getElementById('role');
+            const photoInput = document.getElementById('photo-upload');
+            const previewContainer = document.getElementById('upload-preview-container');
+            const originalContent = previewContainer.innerHTML;
+
+            const REMOVE_BG_API_KEY = "2WmGDqurYTJo64YoEfVPEW6D";
+
+
+            let uploadedImgDataUrl = null;
+            let bgRemovalDone = false;
+
+            photoInput.addEventListener('change', async function (e) {
+              const file = e.target.files[0];
+              if (!file) {
+                uploadedImgDataUrl = null;
+                bgRemovalDone = false;
+                previewContainer.innerHTML = originalContent;
+                return;
+              }
+
+              const fileSize = (file.size / 1024).toFixed(1) + ' KB';
+              uploadedImgDataUrl = null;
+              bgRemovalDone = false;
+
+              previewContainer.innerHTML = `
       <div class="flex flex-col items-center gap-4 w-full">
         <div class="w-24 h-24 rounded-full border-[3px] border-ink neo-shadow-sm flex items-center justify-center bg-tertiary-container relative overflow-hidden">
           <span class="material-symbols-outlined text-4xl text-ink animate-[spin_2s_linear_infinite]">sync</span>
         </div>
         <div class="flex flex-col items-center gap-1 text-center">
-          <span class="text-ink font-bold uppercase tracking-wider text-sm">> ISOLATING_SUBJECT...</span>
+          <span class="text-ink font-bold uppercase tracking-wider text-sm">> REMOVING_BACKGROUND_API...</span>
           <p class="text-on-surface-variant text-xs font-mono">${file.name} (${fileSize})</p>
         </div>
       </div>
     `;
 
-    try {
-      const bgRemoval = removeBgFn;
-      if (!bgRemoval) throw new Error('Background removal library not loaded');
+              try {
+                if (REMOVE_BG_API_KEY === "YOUR_API_KEY_HERE") {
+                  throw new Error("Please add your remove.bg API key to the script.");
+                }
 
-      const resultBlob = await bgRemoval(file, {
-        publicPath: 'https://esm.run/@imgly/background-removal/',
-        model: 'small',
-        output: { format: 'image/png', quality: 1 }
-      });
+                const formData = new FormData();
+                formData.append('image_file', file);
+                formData.append('size', 'auto');
 
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        uploadedImgDataUrl = ev.target.result;
-        bgRemovalDone = true;
+                const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                  method: 'POST',
+                  headers: {
+                    'X-Api-Key': REMOVE_BG_API_KEY
+                  },
+                  body: formData
+                });
 
-        previewContainer.innerHTML = `
+                if (!response.ok) {
+                  throw new Error(`remove.bg API Error: ${response.status} ${response.statusText}`);
+                }
+
+                const resultBlob = await response.blob();
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                  uploadedImgDataUrl = ev.target.result;
+                  bgRemovalDone = true;
+
+                  previewContainer.innerHTML = `
           <div class="flex flex-col items-center gap-4 w-full">
             <div class="w-32 h-32 rounded-full border-[3px] border-ink neo-shadow-sm bg-surface-container relative overflow-hidden" style="background-image: radial-gradient(#d2d9f4 2px, transparent 2px); background-size: 10px 10px;">
               <img src="${uploadedImgDataUrl}" class="w-full h-full object-cover" />
@@ -302,57 +320,57 @@
             <button type="button" onclick="location.reload()" class="text-secondary text-xs uppercase font-bold hover:underline">> RESET</button>
           </div>
         `;
-      };
-      reader.readAsDataURL(resultBlob);
-    } catch (err) {
-      console.error('Background removal failed:', err);
-      const fallbackReader = new FileReader();
-      fallbackReader.onload = function(ev) {
-        uploadedImgDataUrl = ev.target.result;
-        bgRemovalDone = true;
-        previewContainer.innerHTML = `
+                };
+                reader.readAsDataURL(resultBlob);
+              } catch (err) {
+                console.error('Background removal failed:', err);
+                const fallbackReader = new FileReader();
+                fallbackReader.onload = function (ev) {
+                  uploadedImgDataUrl = ev.target.result;
+                  bgRemovalDone = true;
+                  previewContainer.innerHTML = `
           <div class="flex flex-col items-center gap-4 w-full">
             <div class="w-32 h-32 rounded-full border-[3px] border-ink neo-shadow-sm overflow-hidden">
               <img src="${uploadedImgDataUrl}" class="w-full h-full object-cover" />
             </div>
             <div class="flex flex-col items-center gap-1 text-center">
-              <span class="text-secondary font-bold uppercase tracking-wider text-sm">> RAW_IMAGE_LOADED</span>
-              <p class="text-on-surface-variant text-xs font-mono">${file.name}</p>
+              <span class="text-secondary font-bold uppercase tracking-wider text-sm">> RAW_IMAGE_LOADED (API_FAILED)</span>
+              <p class="text-on-surface-variant text-xs font-mono">${err.message}</p>
             </div>
             <button type="button" onclick="location.reload()" class="text-primary text-xs uppercase font-bold hover:underline">> RESET</button>
           </div>
         `;
-      };
-      fallbackReader.readAsDataURL(file);
-    }
-  });
+                };
+                fallbackReader.readAsDataURL(file);
+              }
+            });
 
-  function showNotification(message) {
-    const existing = document.getElementById('validation-alert');
-    if (existing) existing.remove();
+            function showNotification(message) {
+              const existing = document.getElementById('validation-alert');
+              if (existing) existing.remove();
 
-    const alert = document.createElement('div');
-    alert.id = 'validation-alert';
-    alert.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[100] px-6 py-4 bg-tertiary-container text-ink border-[3px] border-ink neo-shadow font-bold uppercase tracking-wider flex items-center gap-4 fade-in rounded';
-    alert.innerHTML = `
+              const alert = document.createElement('div');
+              alert.id = 'validation-alert';
+              alert.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-[100] px-6 py-4 bg-tertiary-container text-ink border-[3px] border-ink neo-shadow font-bold uppercase tracking-wider flex items-center gap-4 fade-in rounded';
+              alert.innerHTML = `
       <span class="material-symbols-outlined">error</span>
       <span class="font-mono text-sm">> ${message}</span>
       <button onclick="this.parentElement.remove()" class="ml-4 hover:scale-110 transition-transform">
         <span class="material-symbols-outlined">close</span>
       </button>
     `;
-    document.body.appendChild(alert);
-    setTimeout(() => alert.remove(), 4000);
-  }
+              document.body.appendChild(alert);
+              setTimeout(() => alert.remove(), 4000);
+            }
 
-  btn.addEventListener('click', () => {
-    const missing = [];
-    if (!nameInput.value.trim()) missing.push('NAME');
-    if (!roleInput.value.trim()) missing.push('ROLE');
-    if (!uploadedImgDataUrl && !bgRemovalDone) missing.push('PHOTO');
+            btn.addEventListener('click', () => {
+              const missing = [];
+              if (!nameInput.value.trim()) missing.push('NAME');
+              if (!roleInput.value.trim()) missing.push('ROLE');
+              if (!uploadedImgDataUrl && !bgRemovalDone) missing.push('PHOTO');
 
-    if (missing.length > 0) {
-      showNotification(\`ERR: MISSING [ \${missing.join(', ')} ]\`);
+              if (missing.length > 0) {
+                showNotification(\`ERR: MISSING [ \${missing.join(', ')} ]\`);
       return;
     }
 
@@ -531,4 +549,7 @@
     userImg.src = uploadedImgDataUrl;
   }
 })();
-</script></body></html>
+          </script>
+        </body>
+
+</html>
