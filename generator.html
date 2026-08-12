@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Hacker House Goa 2026 - Frame Generator</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "paper-white": "#F8FAFC",
+                        "inverse-primary": "#4ae176",
+                        "outline": "#94948a",
+                        "primary-fixed-dim": "#4ae176",
+                        "on-tertiary-container": "#e1e0db",
+                        "outline-variant": "#494740",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#5a4300",
+                        "tertiary": "#c5c4c0",
+                        "inverse-on-surface": "#32302b",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#ffe4ef",
+                        "secondary-fixed-dim": "#ffb0cd",
+                        "error": "#ffb4ab",
+                        "primary": "#45f576",
+                        "background": "#14140f",
+                        "tertiary-container": "#4a4a46",
+                        "on-tertiary-fixed": "#251a00",
+                        "on-primary-fixed": "#002109",
+                        "on-tertiary": "#2e2e2a",
+                        "surface-tint": "#45f576",
+                        "on-surface": "#e6e2d9",
+                        "warning-orange": "#F97316",
+                        "secondary": "#ffa7cd",
+                        "primary-container": "#005221",
+                        "on-surface-variant": "#c9c6bc",
+                        "on-primary": "#003915",
+                        "inverse-surface": "#e6e2d9",
+                        "surface-container-low": "#1c1c17",
+                        "surface-dim": "#14140f",
+                        "on-secondary": "#5f0036",
+                        "error-container": "#93000a",
+                        "surface-container": "#21201b",
+                        "surface-container-high": "#2b2a25",
+                        "surface": "#14140f",
+                        "on-secondary-fixed": "#3e0022",
+                        "secondary-container": "#870051",
+                        "secondary-fixed": "#ffd9e4",
+                        "electric-cyan": "#06B6D4",
+                        "tertiary-fixed": "#ffdf9a",
+                        "on-secondary-fixed-variant": "#8c0053",
+                        "jungle-dark": "#064E3B",
+                        "surface-bright": "#3a3933",
+                        "on-primary-container": "#69ff8f",
+                        "primary-fixed": "#6bff8f",
+                        "tertiary-fixed-dim": "#f7be1d",
+                        "on-background": "#e6e2d9",
+                        "surface-container-highest": "#36352f",
+                        "surface-container-lowest": "#0f0e0a",
+                        "on-primary-fixed-variant": "#005321",
+                        "surface-variant": "#494740"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "border-width": "3px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "48px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["EB Garamond"],
+                        "headline-xl": ["EB Garamond"],
+                        "headline-lg": ["EB Garamond"],
+                        "label-md": ["EB Garamond"],
+                        "headline-lg-mobile": ["EB Garamond"],
+                        "body-lg": ["EB Garamond"],
+                        "body-md": ["EB Garamond"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-xl": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px #0f0e0a;
+        }
+        .neo-shadow-lg {
+            box-shadow: 6px 6px 0px 0px #0f0e0a;
+        }
+        .neo-shadow-input {
+            box-shadow: 3px 3px 0px 0px #0f0e0a;
+        }
+        .sticker-rotate-1 { transform: rotate(-1.5deg); }
+        .sticker-rotate-2 { transform: rotate(2deg); }
+        .sticker-rotate-3 { transform: rotate(-3deg); }
+        
+        .diagonal-sash {
+            background-color: #fd56a7; /* hot pink */
+            color: #ffffff; /* on-secondary */
+            transform: rotate(-10deg);
+            width: 120%;
+            left: -10%;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee 15s linear infinite;
+        }
+
+        .marquee-content span {
+            padding: 0 1rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen relative dark" data-mode="connect">
+<!-- Background Images -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-50">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full" data-alt="A stylized graphic illustration of a vibrant tropical sunrise over the ocean, with geometric sun rays and palm tree silhouettes. Vector art style." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCUxJWwphMjLrz6h3fabvBtTbx5f63mzdHbWO76LWzp3unO-UapeTujmV1MkId8nETpCxb8zZ0pJPCJKHClrZ28Et7lfyh45Z-uJ36e_PFYt3hBhDNvrpiyLPOwpLaC1q5k8YfNoOlsevAFc9QoG4QScAW8q8wwHshioT3NZQo6qtmDS-8E0lkvXgYLxVTSOF-VqWP2av0VzuVjU8VsBA1VMK2WMSMMEIS0M0mOdsqRn3NlIlFcNuyEsVDT25635LBy5KU&quot;); background-size: cover; background-position: center center; background-attachment: fixed;"></div>
+</div>
+<div class="fixed inset-0 z-0 pointer-events-none mix-blend-multiply opacity-50 hidden md:block">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full" data-alt="Stylized palm tree silhouettes framing the edges of the composition in deep jungle green, with subtle line-art details." style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLvcz7nxRhfyjQEmYI-IJauBx2p3rpms8Z_rj9LdT60U0p04akH7OnpgfI_oJsfDdImyc0o07aXdqOoYwGfP4fJC9ReTcB5x4jdK7yTxRSaWDXxyPxGgfsuJeUduH-qAivHoPORJMPAy8k78yeO7JsFzp4EIAHB_EPocl_FdtOcrYar-lb9FzSnijziBL8GKQfZCcVaflINJpbM607HlsKjRvIKJrr6kQQfYEZVScmBVQTOmzBL3pxxMtVgE')"></div>
+</div>
+<!-- Decorative Ribbon -->
+<div class="absolute top-32 left-0 w-full overflow-hidden pointer-events-none z-0">
+<div class="diagonal-sash py-3 border-y-border-width border-surface-container-lowest text-surface-container-lowest font-headline-lg-mobile font-bold uppercase tracking-widest shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex justify-center items-center">
+<div class=""><span class="">HACKER HOUSE GOA 2026</span><span class="">★</span><span class="">BUILD THE FUTURE</span></div>
+</div>
+</div>
+<!-- TopAppBar -->
+<header class="bg-surface-container/80 backdrop-blur-md border-b-border-width border-surface-container-lowest shadow-[4px_4px_0px_0px_#0f0e0a] flex justify-between items-center px-margin-mobile h-20 w-full z-50 docked full-width top-0 sticky">
+<div class="flex items-center gap-4">
+<button class="text-primary hover:bg-primary-container transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 rounded-DEFAULT border-2 border-transparent">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<a href="index.html" class="flex items-center gap-3"><div class="relative flex items-center h-12">
+<img alt="Hacker House" class="h-10 md:h-12 object-contain filter invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMUh722k4Z_MNFtB_p66AqxJLw1SG7JpHG4yQfzvrbJYDwp9ejozJQuaKpHFfxmK1a1ldLtlELA1NQmKd8RCX-cFoIeB4zIj4ywhoFGzL7IzoZt1CqUTRIFd-PI57bwdRcxpf8Xf7-KVFAnU6lB_Qiw_5VX7y9OhPYnyZ61B9uR7nxK0hDyRW30albp1xWIzNZaq9lAk96Bta7_vsKUY84sQiTGN_pzupwmKgQ1UqWZsDyAxc8LhRJDNBHA17Yd0_HI5U">
+<div class="absolute -right-4 -top-2 w-12 h-12 md:w-14 md:h-14 bg-secondary-container border-2 border-surface-container-lowest rounded-full p-1 neo-shadow flex items-center justify-center rotate-12 z-10">
+<div class="w-full h-full flex items-center justify-center"><img alt="Goa" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAArusKEqWI7kIa2dnDtjlZe0UM-y4vP0ZNjCd6MW91VfrI-axULrzO1ce9GhtHnsvPYTBoaoP7Avdd_K60lL_yKDvlGLJ5bu3hy38oIv9vtrtjucvdm-bbufq8IgPPpeYh6nEIg6CijMI8A7FR_BoTkupjQgyDV_O9mB8v6xqN4RNQ_jf8goEU61fvvVPNKidIIcLzVqntnkB2tfmbHgcCO2eUPFxls8Ky6Z_D5W9FL5NXFvYWuJkhSjIwAnJUJ8rd3Sw"></div>
+</div>
+</div></a>
+</div>
+<div>
+<div class="w-12 h-12 flex items-center justify-center"><img alt="2:47PM Studio Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0zdQVZpFll416s6G5lM4AR3hq2mb3HdI88HhgZz3n1O9xmlxIxp8ZNmCnRg6MkflfEKg8NBxr5ntaHVlUig5-s6fCZp12v3jV0e0Kupr1VBQVX3THzA-tO1mr65HcpyjbKrj6AjZHoRZeEefMesLMqbAgeJPkO28QSvQjFxpPMrASnopGPZeNzi61cuh8Xqb_-ZtkIbapEAFO5WxXhGki1IIeuWnkHbZoa3v6nnD_2GwBcSIUWjBCEmwW7JyxKzKoT8I"></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="relative z-10 container mx-auto px-margin-mobile md:px-margin-desktop md:py-16 max-w-7xl flex flex-col md:flex-row gap-8 lg:gap-16 pb-32 md:pb-16 backdrop-blur-md rounded-xl border-border-width border-surface-container-lowest neo-shadow-lg bg-surface/10 py-4 mt-12" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);"><div class="w-full max-w-2xl mx-auto flex flex-col gap-8 pt-8">
+<div class="flex flex-col gap-2">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background uppercase tracking-wider">Frame Generator</h1>
+<p class="text-on-surface-variant font-body-md">Customize your Hacker House Goa 2026 profile frame.</p>
+</div>
+<form class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-on-background uppercase tracking-wider" for="name">Name</label>
+<input class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" id="name" placeholder="Enter your name" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" type="text">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-on-background uppercase tracking-wider" for="role">Role</label>
+<input class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" id="role" placeholder="e.g. Fullstack Developer" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" type="text">
+</div>
+<div class="flex flex-col gap-2">
+  <label class="font-label-md text-on-background uppercase tracking-wider" for="photo-upload">UPLOAD PHOTO</label>
+  <div class="relative group cursor-pointer">
+    <input type="file" id="photo-upload" class="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer" accept="image/jpeg, image/png, image/heic" style="appearance: none; -webkit-appearance: none; cursor: pointer;">
+    <div class="backdrop-blur-md border-2 border-dashed border-surface-container-lowest p-8 rounded-DEFAULT text-primary-fixed font-body-md flex flex-col items-center justify-center gap-3 neo-shadow-input transition-all bg-surface-container/20" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" id="upload-preview-container">
+      <span class="material-symbols-outlined text-4xl">cloud_upload</span>
+      <p class="text-center">Drop your photo or click to browse</p>
+    </div>
+  </div>
+</div><button type="button" class="w-full bg-secondary text-on-secondary border-border-width border-surface-container-lowest py-6 font-label-md font-bold uppercase tracking-widest neo-shadow-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2 mb-8" id="generate-btn">GENERATE</button>
+
+</form>
+</div></main>
+<!-- Mobile Sticky Action Bar -->
+
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 border-t-border-width border-surface-container-lowest shadow-[0px_-4px_0px_0px_#0f0e0a] left-0 flex justify-around items-center h-20 bg-surface-container/90 backdrop-blur-md pb-safe">
+<a class="flex flex-col items-center justify-center px-6 py-1 hover:scale-105 transition-transform active:scale-95 transition-all bg-secondary text-on-secondary border-2 border-surface-container-lowest rounded-xl neo-shadow" href="index.html"><span class="material-symbols-outlined mb-1">home</span><span class="font-label-sm text-label-sm">Home</span></a>
+</nav>
+
+<script type="module">
+(function() {
+  const btn = document.getElementById('generate-btn');
+  const nameInput = document.getElementById('name');
+  const roleInput = document.getElementById('role');
+  const photoInput = document.getElementById('photo-upload');
+  const previewContainer = document.getElementById('upload-preview-container');
+  const originalContent = previewContainer.innerHTML;
+
+  // Dynamically import the background removal library
+  let removeBgFn = null;
+  import('https://esm.run/@imgly/background-removal').then(mod => {
+    removeBgFn = mod.removeBackground;
+  }).catch(err => {
+    console.warn('Background removal library failed to load:', err);
+  });
+
+  // uploadedImgDataUrl holds a transparent-BG PNG data URL after removal
+  let uploadedImgDataUrl = null;
+  let bgRemovalDone = false;
+
+  // File Upload listener — auto-removes background on select
+  photoInput.addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) {
+      uploadedImgDataUrl = null;
+      bgRemovalDone = false;
+      previewContainer.innerHTML = originalContent;
+      return;
+    }
+
+    const fileSize = (file.size / 1024).toFixed(1) + ' KB';
+    uploadedImgDataUrl = null;
+    bgRemovalDone = false;
+
+    // Show processing state
+    previewContainer.innerHTML = `
+      <div class="flex flex-col items-center gap-4 w-full">
+        <div class="relative w-32 h-32 rounded-full overflow-hidden border-2 border-primary neo-shadow flex items-center justify-center bg-surface-container">
+          <span class="material-symbols-outlined text-5xl text-primary animate-spin" style="animation: spin 1.5s linear infinite;">autorenew</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-primary font-bold uppercase tracking-widest text-label-md">Removing background...</span>
+          <p class="text-on-surface-variant text-label-sm">${file.name} (${fileSize})</p>
+          <p class="text-on-surface-variant text-label-sm">This may take 5–15 seconds</p>
+        </div>
+      </div>
+    `;
+
+    try {
+      const bgRemoval = removeBgFn;
+      if (!bgRemoval) throw new Error('Background removal library not loaded');
+
+      const resultBlob = await bgRemoval(file, {
+        publicPath: 'https://esm.run/@imgly/background-removal/',
+        model: 'small',
+        output: { format: 'image/png', quality: 1 }
+      });
+
+      // Convert blob to data URL
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        uploadedImgDataUrl = ev.target.result;
+        bgRemovalDone = true;
+
+        // Show preview with checkered bg to show transparency
+        previewContainer.innerHTML = `
+          <div class="flex flex-col items-center gap-4 w-full">
+            <div class="relative w-32 h-32 rounded-full overflow-hidden border-2 border-primary neo-shadow"
+              style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 12px 12px; background-position: 0 0, 0 6px, 6px -6px, -6px 0px; background-color: white;">
+              <img src="${uploadedImgDataUrl}" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex flex-col items-center gap-1">
+              <span class="text-primary font-bold uppercase tracking-widest text-label-md">✓ Background Removed!</span>
+              <p class="text-on-surface-variant text-label-sm">${file.name} (${fileSize})</p>
+            </div>
+            <button type="button" onclick="location.reload()" class="text-primary text-label-sm uppercase underline">Change Photo</button>
+          </div>
+        `;
+      };
+      reader.readAsDataURL(resultBlob);
+    } catch (err) {
+      console.error('Background removal failed:', err);
+      // Fallback: use original photo without bg removal
+      const fallbackReader = new FileReader();
+      fallbackReader.onload = function(ev) {
+        uploadedImgDataUrl = ev.target.result;
+        bgRemovalDone = true;
+        previewContainer.innerHTML = `
+          <div class="flex flex-col items-center gap-4 w-full">
+            <div class="relative w-32 h-32 rounded-full overflow-hidden border-2 border-secondary neo-shadow">
+              <img src="${uploadedImgDataUrl}" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex flex-col items-center gap-1">
+              <span class="text-secondary font-bold uppercase tracking-widest text-label-md">Uploaded (no BG removal)</span>
+              <p class="text-on-surface-variant text-label-sm">${file.name} (${fileSize})</p>
+            </div>
+            <button type="button" onclick="location.reload()" class="text-primary text-label-sm uppercase underline">Change Photo</button>
+          </div>
+        `;
+      };
+      fallbackReader.readAsDataURL(file);
+    }
+  });
+
+  function showNotification(message) {
+    const existing = document.getElementById('validation-alert');
+    if (existing) existing.remove();
+
+    const alert = document.createElement('div');
+    alert.id = 'validation-alert';
+    alert.className = 'fixed top-24 left-1/2 -translate-x-1/2 z-[100] px-6 py-4 bg-secondary text-on-secondary border-2 border-surface-container-lowest neo-shadow-lg font-bold uppercase tracking-wider flex items-center gap-4 animate-bounce';
+    alert.innerHTML = `
+      <span class="material-symbols-outlined">warning</span>
+      <span>${message}</span>
+      <button onclick="this.parentElement.remove()" class="ml-4 hover:scale-110 transition-transform">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    `;
+    document.body.appendChild(alert);
+    setTimeout(() => alert.remove(), 5000);
+  }
+
+  btn.addEventListener('click', () => {
+    const missing = [];
+    if (!nameInput.value.trim()) missing.push('NAME');
+    if (!roleInput.value.trim()) missing.push('ROLE');
+    if (!uploadedImgDataUrl && !bgRemovalDone) missing.push('PHOTO');
+
+    if (missing.length > 0) {
+      showNotification(`Fill ${missing.join('/')} field`);
+      return;
+    }
+
+    if (!bgRemovalDone) {
+      showNotification('Please wait — background removal is still processing');
+      return;
+    }
+
+    // Show loading state
+    btn.textContent = 'GENERATING...';
+    btn.disabled = true;
+    // Ensure fonts are loaded before canvas rendering
+    document.fonts.ready.then(() => {
+      generateBadgeAndRedirect();
+    });
+  });
+
+  function generateBadgeAndRedirect() {
+    const W = 800, H = 1000;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // ── HELPER ──────────────────────────────────────────────────────────────
+    function fillRoundedRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    // ── 1. BACKGROUND (paper-white) ─────────────────────────────────────────
+    ctx.fillStyle = '#faf8ff';
+    ctx.fillRect(0, 0, W, H);
+
+    // ── 2. SUBTLE GRID PATTERN ──────────────────────────────────────────────
+    ctx.strokeStyle = 'rgba(19, 27, 46, 0.04)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+    // ── 3. TOP ACCENT STRIP (Primary Green thin line) ───────────────────────
+    ctx.fillStyle = '#22c55e';
+    ctx.fillRect(0, 0, W, 6);
+
+    // ── 4. SMALL HEADER BAR (Secondary Pink) ────────────────────────────────
+    const headerH = 52;
+    ctx.fillStyle = '#b4136d';
+    ctx.fillRect(0, 6, W, headerH);
+    ctx.strokeStyle = '#0F172A';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(0, 6, W, headerH);
+
+    // Dot pattern decoration in header
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    for (let dx = 20; dx < W; dx += 24) {
+      for (let dy = 12; dy < 6 + headerH; dy += 14) {
+        ctx.beginPath(); ctx.arc(dx, dy, 2, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    // Header label (small, label-md style)
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.font = '700 14px "JetBrains Mono", monospace';
+    ctx.fillText('HACKER HOUSE GOA 2026', W / 2, 37);
+
+    // ── 5. MAIN CARD AREA ──────────────────────────────────────────────────
+    const cardX = 40, cardY = 80, cardW = W - 80, cardH = H - 200;
+    // Card hard shadow
+    ctx.fillStyle = '#0F172A';
+    fillRoundedRect(cardX + 6, cardY + 6, cardW, cardH, 8);
+    ctx.fill();
+    // Card surface
+    ctx.fillStyle = '#ffffff';
+    fillRoundedRect(cardX, cardY, cardW, cardH, 8);
+    ctx.fill();
+    ctx.strokeStyle = '#0F172A';
+    ctx.lineWidth = 3;
+    fillRoundedRect(cardX, cardY, cardW, cardH, 8);
+    ctx.stroke();
+
+    // ── 6. DECORATIVE YELLOW STICKER (top-right, rotated) ──────────────────
+    ctx.save();
+    ctx.translate(W - 60, 115);
+    ctx.rotate(8 * Math.PI / 180);
+    ctx.fillStyle = '#0F172A'; // shadow
+    fillRoundedRect(-52, -17, 108, 34, 4);
+    ctx.fill();
+    ctx.fillStyle = '#d7a400'; // tertiary container yellow
+    ctx.strokeStyle = '#0F172A';
+    ctx.lineWidth = 3;
+    fillRoundedRect(-56, -21, 108, 34, 4);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#0F172A';
+    ctx.font = '700 13px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('GOA 2026', 0, 5);
+    ctx.restore();
+
+    // ── 7. DECORATIVE CYAN STICKER (top-left, rotated) ─────────────────────
+    ctx.save();
+    ctx.translate(62, 120);
+    ctx.rotate(-5 * Math.PI / 180);
+    ctx.fillStyle = '#0F172A'; // shadow
+    fillRoundedRect(-50, -17, 104, 34, 4);
+    ctx.fill();
+    ctx.fillStyle = '#06B6D4'; // electric cyan
+    ctx.strokeStyle = '#0F172A';
+    ctx.lineWidth = 3;
+    fillRoundedRect(-54, -21, 104, 34, 4);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#0F172A';
+    ctx.font = '700 12px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('> BUILD_', 0, 5);
+    ctx.restore();
+
+    // ── 8. AVATAR PHOTO (background removed, full-figure cutout) ────────────
+    const userImg = new Image();
+    userImg.onload = function() {
+      const cx = W / 2, cy = 380, r = 155;
+
+      // Decorative backing circle — outer shadow
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx + 7, cy + 7, r + 10, 0, Math.PI * 2);
+      ctx.fillStyle = '#0F172A';
+      ctx.fill();
+      ctx.restore();
+
+      // Decorative backing circle — primary green ring
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + 10, 0, Math.PI * 2);
+      ctx.fillStyle = '#22c55e';
+      ctx.fill();
+      ctx.strokeStyle = '#0F172A';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.restore();
+
+      // Inner backing fill (light surface)
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#f2f3ff';
+      ctx.fill();
+      ctx.restore();
+
+      // Draw BG-removed photo as a centered cutout (transparent PNG)
+      // Scale to fill the circle area while maintaining aspect ratio
+      const imgAspect = userImg.width / userImg.height;
+      let dw, dh;
+      if (imgAspect >= 1) {
+        // wider image: match diameter width
+        dw = (r + 3) * 2;
+        dh = dw / imgAspect;
+      } else {
+        // taller image: match diameter height
+        dh = (r + 3) * 2;
+        dw = dh * imgAspect;
+      }
+      const dx = cx - dw / 2;
+      const dy = cy - dh / 2;
+      ctx.drawImage(userImg, dx, dy, dw, dh);
+
+      // ── 9. NAME (Bricolage Grotesque, headline-lg style) ──────────────────
+      const nameVal = nameInput.value.trim().toUpperCase();
+      // Measure & truncate if too wide
+      ctx.font = '800 54px "Bricolage Grotesque", sans-serif';
+      let fontSize = 54;
+      while (ctx.measureText(nameVal).width > cardW - 80 && fontSize > 28) {
+        fontSize -= 2;
+        ctx.font = `800 ${fontSize}px "Bricolage Grotesque", sans-serif`;
+      }
+      ctx.fillStyle = '#131b2e'; // on-background
+      ctx.textAlign = 'center';
+      ctx.fillText(nameVal, W / 2, 645);
+
+      // Divider line under name
+      ctx.strokeStyle = '#bccbb9'; // outline-variant
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cardX + 60, 665);
+      ctx.lineTo(cardX + cardW - 60, 665);
+      ctx.stroke();
+
+      // ── 10. ROLE STICKER ─────────────────────────────────────────────────
+      const roleVal = roleInput.value.trim().toUpperCase();
+      ctx.font = '700 22px "JetBrains Mono", monospace';
+      const tw = ctx.measureText('> ' + roleVal).width;
+      const pX = 32, pY = 14;
+      const sW = tw + pX * 2, sH = 22 + pY * 2;
+      const sX = (W - sW) / 2, sY = 690;
+
+      // Sticker shadow
+      ctx.fillStyle = '#0F172A';
+      ctx.fillRect(sX + 5, sY + 5, sW, sH);
+
+      // Sticker fill — primary green
+      ctx.fillStyle = '#006e2f';
+      ctx.strokeStyle = '#0F172A';
+      ctx.lineWidth = 3;
+      ctx.fillRect(sX, sY, sW, sH);
+      ctx.strokeRect(sX, sY, sW, sH);
+
+      // Sticker text
+      ctx.fillStyle = '#6bff8f'; // primary-fixed bright green
+      ctx.textAlign = 'center';
+      ctx.fillText('> ' + roleVal, W / 2, sY + pY + 17);
+
+      // ── 11. BOTTOM ACCENT ROW ─────────────────────────────────────────────
+      ctx.fillStyle = '#fd56a7'; // secondary-container pink accent strip
+      ctx.fillRect(cardX, cardY + cardH - 36, cardW, 36);
+      ctx.strokeStyle = '#0F172A';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(cardX, cardY + cardH - 36, cardW, 36);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '700 12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('OCTOBER 2026 • GOA, INDIA', W / 2, cardY + cardH - 14);
+
+      // ── 12. FOOTER BAR (Jungle Dark) ──────────────────────────────────────
+      ctx.fillStyle = '#064E3B';
+      ctx.fillRect(0, H - 120, W, 120);
+      ctx.strokeStyle = '#0F172A';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(0, H - 120);
+      ctx.lineTo(W, H - 120);
+      ctx.stroke();
+
+      // Footer logo text
+      ctx.fillStyle = '#22c55e'; // primary-container
+      ctx.font = '800 22px "Bricolage Grotesque", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('HACKER HOUSE', W / 2, H - 80);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '700 13px "JetBrains Mono", monospace';
+      ctx.fillText('STITCH GOA • BUILD THE FUTURE', W / 2, H - 52);
+
+      // Footer bottom accent
+      ctx.fillStyle = '#b4136d';
+      ctx.fillRect(0, H - 8, W, 8);
+
+      // ── 13. SAVE & REDIRECT ───────────────────────────────────────────────
+      try {
+        sessionStorage.setItem('generatedBadge', canvas.toDataURL('image/png'));
+        sessionStorage.setItem('generatedBadgeName', nameInput.value.trim());
+        window.location.href = 'success.html';
+      } catch (e) {
+        console.error('Failed to save to sessionStorage', e);
+        btn.textContent = 'GENERATE';
+        btn.disabled = false;
+        alert('Failed to save badge. The photo may be too large — try a smaller image.');
+      }
+    };
+    userImg.src = uploadedImgDataUrl;
+  }
+})();
+</script></body></html>
