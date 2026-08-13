@@ -200,14 +200,7 @@
             </div>
             <div class="flex flex-col gap-2">
                 <label class="font-label-md text-on-background uppercase tracking-wider" for="role">Role</label>
-                <select id="role-select" class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);">
-                    <option value="AI ENGINEER">AI ENGINEER</option>
-                    <option value="BUILDER">BUILDER</option>
-                    <option value="DESIGNER">DESIGNER</option>
-                    <option value="SPEAKER">SPEAKER</option>
-                    <option value="DEVELOPER">DEVELOPER</option>
-                    <option value="HACKER">HACKER</option>
-                </select>
+                <input id="role-select" class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" placeholder="e.g. HACKER" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" type="text" maxlength="20">
             </div>
             
             <!-- Github - Added to match old generator fields -->
@@ -242,6 +235,11 @@
             <span class="text-error text-xs animate-pulse">●</span>
         </div>
         <div id="preview-container" class="border-border-width border-surface-container-lowest rounded-xl overflow-hidden neo-shadow-lg aspect-[3/4] bg-surface flex items-center justify-center relative">
+            <!-- Loading indicator for background removal -->
+            <div id="loading-overlay" class="absolute inset-0 bg-surface/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-4 hidden">
+                <span class="material-symbols-outlined text-primary-fixed text-4xl animate-spin">progress_activity</span>
+                <span class="font-label-md text-primary-fixed uppercase tracking-wider text-center px-4" id="loading-text">Removing Background...</span>
+            </div>
             <!-- This will be populated by scripts.js -->
             <img id="preview-image" alt="Hacker House Goa 2026 ID preview" class="max-w-full max-h-full object-contain">
         </div>

@@ -117,6 +117,36 @@ document.addEventListener(
         let templateLoaded = false;
 
 
+        // Ribbon overlay — drawn on top of the user photo
+        const overlayImage =
+            new Image();
+
+
+        overlayImage.src =
+            './assets/hhgoa-overlay.png';
+
+
+        let overlayLoaded = false;
+
+
+        overlayImage.onload =
+            () => {
+
+                overlayLoaded = true;
+
+            };
+
+
+        overlayImage.onerror =
+            () => {
+
+                console.warn(
+                    'Ribbon overlay image not found: assets/hhgoa-overlay.png'
+                );
+
+            };
+
+
         templateImage.onload =
             () => {
 
@@ -219,12 +249,10 @@ document.addEventListener(
 
 
             // ------------------------------------------------
-            // 3. RESTORE RIBBONS
+            // 3. RIBBON OVERLAY (drawn in front of photo)
             // ------------------------------------------------
 
-            drawRibbonOne();
-
-            drawRibbonTwo();
+            drawRibbonOverlay();
 
 
             // ------------------------------------------------
@@ -290,19 +318,19 @@ document.addEventListener(
 
 
             const photoX =
-                55;
+                0;
 
 
             const photoY =
-                235;
+                0;
 
 
             const photoWidth =
-                900;
+                1019;
 
 
             const photoHeight =
-                1120;
+                1528;
 
 
             const scale =
@@ -348,123 +376,35 @@ document.addEventListener(
 
 
         // ==================================================
-        // RIBBON 1
+        // RIBBON OVERLAY
         // ==================================================
 
-        function drawRibbonOne() {
+        function drawRibbonOverlay() {
 
 
             /*
-                We take ONLY the ribbon portion from the
-                original template and put it back on top
-                of the person.
-
-                This is what creates:
-
-                    PHOTO
-                      ↓
-                    RIBBON
+                Draw the separate ribbon overlay PNG on top
+                of the user photo so the ribbon always
+                appears in front of the person.
             */
 
 
-            ctx.save();
-
-
-            ctx.beginPath();
-
-
-            ctx.moveTo(
-                0,
-                930
-            );
-
-
-            ctx.lineTo(
-                1019,
-                1065
-            );
-
-
-            ctx.lineTo(
-                1019,
-                1170
-            );
-
-
-            ctx.lineTo(
-                0,
-                1035
-            );
-
-
-            ctx.closePath();
-
-
-            ctx.clip();
-
-
-            ctx.drawImage(
-                templateImage,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-
-            ctx.restore();
-
-        }
-
-
-        // ==================================================
-        // RIBBON 2
-        // ==================================================
-
-        function drawRibbonTwo() {
+            if (!overlayLoaded) {
+                return;
+            }
 
 
             ctx.save();
 
 
-            ctx.beginPath();
-
-
-            ctx.moveTo(
-                0,
-                1050
-            );
-
-
-            ctx.lineTo(
-                1019,
-                1180
-            );
-
-
-            ctx.lineTo(
-                1019,
-                1290
-            );
-
-
-            ctx.lineTo(
-                0,
-                1150
-            );
-
-
-            ctx.closePath();
-
-
-            ctx.clip();
-
+            // Shift ribbon overlay to the left (negative x moves it left)
+            const ribbonOffsetX = -300;
 
             ctx.drawImage(
-                templateImage,
+                overlayImage,
+                ribbonOffsetX,
                 0,
-                0,
-                canvas.width,
+                canvas.width + Math.abs(ribbonOffsetX),
                 canvas.height
             );
 
@@ -513,13 +453,13 @@ document.addEventListener(
 
 
             ctx.font =
-                '800 42px "Bricolage Grotesque", sans-serif';
+                '800 56px "Bricolage Grotesque", sans-serif';
 
 
             ctx.fillText(
                 name,
                 55,
-                520
+                620
             );
 
 
@@ -532,13 +472,13 @@ document.addEventListener(
 
 
             ctx.font =
-                'italic 700 22px "JetBrains Mono", monospace';
+                'italic 700 30px "JetBrains Mono", monospace';
 
 
             ctx.fillText(
                 role,
                 55,
-                558
+                670
             );
 
 
@@ -566,13 +506,13 @@ document.addEventListener(
 
 
             ctx.font =
-                '700 22px "JetBrains Mono", monospace';
+                '700 24px "JetBrains Mono", monospace';
 
 
             ctx.fillText(
                 badgeId,
-                35,
-                92
+                55,
+                760
             );
 
 
@@ -671,7 +611,7 @@ document.addEventListener(
                         /*
                             BARCODE POSITION
 
-                            Top-left of the template.
+                            Below name/role/badge-id.
                         */
 
 
@@ -679,11 +619,11 @@ document.addEventListener(
 
                             barcodeImage,
 
-                            35,
-                            115,
+                            55,
+                            780,
 
-                            190,
-                            55
+                            220,
+                            60
 
                         );
 
@@ -840,72 +780,92 @@ document.addEventListener(
         // HANDLE FILE
         // ==================================================
 
-        function handleFile(file) {
-
-
-            if (
-                !file.type.startsWith(
-                    'image/'
-                )
-            ) {
-
-                alert(
-                    'Please upload an image.'
-                );
-
+        async function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload an image.');
                 return;
-
             }
 
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const loadingText = document.getElementById('loading-text');
+            if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+            if (loadingText) loadingText.textContent = 'Loading AI model...';
 
-            const reader =
-                new FileReader();
+            try {
 
+                // Client-side background removal — no API key needed
+                if (loadingText) loadingText.textContent = 'Removing background (AI)...';
 
-            reader.onload =
-                (event) => {
+                // Try loading the background removal library
+                let removeBackground;
+                try {
+                    const mod = await import(
+                        'https://esm.run/@imgly/background-removal'
+                    );
+                    removeBackground = mod.removeBackground || mod.default?.removeBackground || mod.default;
+                } catch (importErr) {
+                    console.warn('ESM import failed, trying UMD fallback:', importErr);
+                    // Fallback: load as a script tag
+                    await new Promise((resolve, reject) => {
+                        if (window.BackgroundRemoval) { resolve(); return; }
+                        const s = document.createElement('script');
+                        s.src = 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/background-removal.browser.js';
+                        s.onload = resolve;
+                        s.onerror = reject;
+                        document.head.appendChild(s);
+                    });
+                    removeBackground = window.BackgroundRemoval?.removeBackground;
+                }
 
+                if (typeof removeBackground !== 'function') {
+                    throw new Error('removeBackground function not found in library');
+                }
 
-                    const image =
-                        new Image();
+                const resultBlob = await removeBackground(file, {
+                    output: { format: 'image/png', quality: 1 },
+                    progress: (key, current, total) => {
+                        if (loadingText && total > 0) {
+                            const pct = Math.round((current / total) * 100);
+                            loadingText.textContent = `Removing background… ${pct}%`;
+                        }
+                    }
+                });
 
-
-                    image.onload =
-                        () => {
-
-
-                            /*
-                                IMPORTANT:
-
-                                If your existing background
-                                removal API returns a transparent
-                                PNG, replace userImage with that
-                                returned image.
-
-                                For now this accepts the uploaded
-                                image directly.
-                            */
-
-
-                            userImage =
-                                image;
-
-
-                            updatePreview();
-
-                        };
-
-
-                    image.src =
-                        event.target.result;
-
+                const url = URL.createObjectURL(resultBlob);
+                const image = new Image();
+                image.onload = () => {
+                    userImage = image;
+                    updatePreview();
+                    URL.revokeObjectURL(url);
+                    if (loadingOverlay) loadingOverlay.classList.add('hidden');
                 };
+                image.onerror = () => {
+                    console.error('Failed to load processed image.');
+                    loadFallback(file, loadingOverlay);
+                };
+                image.src = url;
 
+            } catch (error) {
+                console.error('Background removal failed:', error);
+                // Silently fall back — no scary alert
+                loadFallback(file, loadingOverlay);
+            }
+        }
 
-            reader.readAsDataURL(
-                file
-            );
-
+        function loadFallback(file, loadingOverlay) {
+            const loadingText = document.getElementById('loading-text');
+            if (loadingText) loadingText.textContent = 'Using original image...';
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const image = new Image();
+                image.onload = () => {
+                    userImage = image;
+                    updatePreview();
+                    if (loadingOverlay) loadingOverlay.classList.add('hidden');
+                };
+                image.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
         }
 
 
@@ -926,7 +886,7 @@ document.addEventListener(
 
 
         roleSelect.addEventListener(
-            'change',
+            'input',
             updatePreview
         );
 
