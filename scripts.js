@@ -3,6 +3,20 @@
 // ID GENERATOR
 // ==========================================================
 
+function showError(msg) {
+    const errorBox = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+    if (errorBox && errorText) {
+        errorText.textContent = msg;
+        errorBox.classList.remove('hidden');
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            errorBox.classList.add('hidden');
+        }, 5000);
+    } else {
+        alert(msg);
+    }
+}
 
 document.addEventListener(
     'DOMContentLoaded',
@@ -137,9 +151,7 @@ document.addEventListener(
                     'Template image not found.'
                 );
 
-                alert(
-                    'Template not found. Please put your final image at: assets/hhgoa.png'
-                );
+                showError('Template not found. Please put your final image at: assets/hhgoa.png');
 
             };
 
@@ -672,7 +684,7 @@ document.addEventListener(
 
         async function handleFile(file) {
             if (!file.type.startsWith('image/') && !file.name.toLowerCase().match(/\.(heic|heif)$/)) {
-                alert('Please upload an image.');
+                showError('Please upload an image.');
                 return;
             }
 
@@ -854,7 +866,7 @@ document.addEventListener(
             if (!role) missing.push('Role');
 
             if (missing.length > 0) {
-                alert(`Please fill out all fields before generating: Missing ${missing.join(', ')}.`);
+                showError(`Please fill out all fields before generating: Missing ${missing.join(', ')}.`);
                 return;
             }
 
