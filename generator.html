@@ -144,7 +144,7 @@
         }
     </style>
 </head>
-<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen relative dark"><div class="relative w-full overflow-hidden pointer-events-none z-50 h-12 mb-[-1rem]"><div class="diagonal-sash py-1 border-y-border-width border-surface-container-lowest marquee-container text-surface-container-lowest font-label-sm font-bold uppercase tracking-widest shadow-[0_4px_12px_rgba(0,0,0,0.5)] absolute top-0"><div class="marquee-content"><span class="">HACKER HOUSE GOA 2026</span><span class="">★</span><span class="">RSVP OPEN</span><span class="">★</span><span class="">HACKER HOUSE GOA 2026</span><span class="">★</span><span class="">RSVP OPEN</span><span class="">★</span><span class="">HACKER HOUSE GOA 2026</span><span class="">★</span><span class="">RSVP OPEN</span><span class="">★</span><span class="">HACKER HOUSE GOA 2026</span><span class="">★</span><span class="">RSVP OPEN</span><span class="">★</span></div></div></div>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen relative dark">
 <!-- Background Images -->
 <div class="fixed inset-0 z-0 pointer-events-none opacity-50">
 <div class="absolute inset-0 bg-cover bg-center w-full h-full" data-alt="A stylized graphic illustration of a vibrant tropical sunrise over the ocean, with geometric sun rays and palm tree silhouettes. Vector art style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUxJWwphMjLrz6h3fabvBtTbx5f63mzdHbWO76LWzp3unO-UapeTujmV1MkId8nETpCxb8zZ0pJPCJKHClrZ28Et7lfyh45Z-uJ36e_PFYt3hBhDNvrpiyLPOwpLaC1q5k8YfNoOlsevAFc9QoG4QScAW8q8wwHshioT3NZQo6qtmDS-8E0lkvXgYLxVTSOF-VqWP2av0VzuVjU8VsBA1VMK2WMSMMEIS0M0mOdsqRn3NlIlFcNuyEsVDT25635LBy5KU'); background-size: cover; background-position: center center; background-attachment: fixed;"></div>
@@ -188,10 +188,10 @@
                 <div id="upload-area" class="backdrop-blur-md border-border-width border-dashed border-surface-container-lowest p-8 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20 flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container/40 text-center gap-2" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);">
                     <span class="material-symbols-outlined text-4xl">add_a_photo</span>
                     <span class="font-bold tracking-wider">CLICK OR DRAG PHOTO HERE</span>
-                    <span class="text-sm opacity-70">PNG, JPG, JPEG</span>
+                    <span class="text-sm opacity-70">PNG, JPG, JPEG, HEIC</span>
                 </div>
                 <!-- Hidden file input for logic to pick up -->
-                <input type="file" id="file-input" accept="image/png,image/jpeg,image/jpg" class="hidden">
+                <input type="file" id="file-input" accept="image/png,image/jpeg,image/jpg,image/heic,image/heif,.heic,.heif" class="hidden">
             </div>
 
             <div class="flex flex-col gap-2">
@@ -203,12 +203,6 @@
                 <input id="role-select" class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" placeholder="e.g. HACKER" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" type="text" maxlength="20">
             </div>
             
-            <!-- Github - Added to match old generator fields -->
-            <div class="flex flex-col gap-2">
-                <label class="font-label-md text-on-background uppercase tracking-wider" for="github">GitHub</label>
-                <input id="github-input" class="backdrop-blur-md border-border-width border-surface-container-lowest p-4 rounded-DEFAULT text-primary-fixed font-body-md focus:outline-none focus:ring-2 focus:ring-primary neo-shadow-input transition-all bg-surface-container/20" placeholder="@github_username" style="background-color: rgba(20, 20, 15, 0.05); backdrop-filter: blur(4px);" type="text">
-            </div>
-
             <!-- Hidden Bio (if needed later) -->
             <div class="flex flex-col gap-2 hidden">
                 <label class="font-label-md text-on-background uppercase tracking-wider" for="bio">Bio</label>
@@ -216,13 +210,9 @@
             </div>
 
             <div class="hidden md:flex gap-4 mt-4">
-                <button id="generate-btn" class="flex-1 bg-primary text-on-primary border-border-width border-surface-container-lowest py-4 font-label-md uppercase tracking-wider neo-shadow active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2" type="button">
+                <button id="generate-btn" class="w-full bg-primary text-on-primary border-border-width border-surface-container-lowest py-4 font-label-md uppercase tracking-wider neo-shadow active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2" type="button">
                     <span class="material-symbols-outlined">badge</span>
                     Generate ID
-                </button>
-                <button id="download-btn" class="flex-1 bg-secondary text-on-secondary border-border-width border-surface-container-lowest py-4 font-label-md uppercase tracking-wider neo-shadow active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2 opacity-50" type="button" disabled>
-                    <span class="material-symbols-outlined">download</span>
-                    Download ID
                 </button>
             </div>
         </form>
@@ -248,14 +238,10 @@
 </main>
 <!-- Mobile Sticky Action Bar -->
 <div class="md:hidden fixed bottom-20 left-0 w-full p-4 z-40 flex gap-2">
-<button id="generate-btn-mobile" class="flex-1 bg-primary text-on-primary border-border-width border-surface-container-lowest py-3 font-label-md uppercase tracking-wider shadow-[2px_2px_0px_0px_#0f0e0a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-1">
-<span class="material-symbols-outlined text-sm" data-icon="badge">badge</span>
-            Generate
-        </button>
-<button id="download-btn-mobile" class="flex-1 bg-secondary text-on-secondary border-border-width border-surface-container-lowest py-3 font-label-md uppercase tracking-wider shadow-[2px_2px_0px_0px_#0f0e0a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-1 opacity-50" disabled>
-<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
-            Save
-        </button>
+    <button id="generate-btn-mobile" class="w-full bg-primary text-on-primary border-border-width border-surface-container-lowest py-3 font-label-md uppercase tracking-wider shadow-[2px_2px_0px_0px_#0f0e0a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-1">
+        <span class="material-symbols-outlined text-sm" data-icon="badge">badge</span>
+        Generate ID
+    </button>
 </div>
 <!-- BottomNavBar -->
 <nav class="md:hidden fixed bottom-0 w-full z-50 border-t-border-width border-surface-container-lowest shadow-[0px_-4px_0px_0px_#0f0e0a] fixed bottom-0 left-0 w-full flex justify-around items-center h-20 bg-surface-container/90 backdrop-blur-md pb-safe">
@@ -272,6 +258,7 @@
 <!-- Hidden elements required by scripts.js -->
 <svg id="barcode" style="display:none;"></svg>
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
 <script src="scripts.js"></script>
 
 </body></html>

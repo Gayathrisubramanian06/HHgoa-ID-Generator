@@ -31,12 +31,6 @@ document.addEventListener(
             );
 
 
-        const githubInput =
-            document.getElementById(
-                'github-input'
-            );
-
-
         const roleSelect =
             document.getElementById(
                 'role-select'
@@ -55,9 +49,9 @@ document.addEventListener(
             );
 
 
-        const downloadBtn =
+        const generateBtnMobile =
             document.getElementById(
-                'download-btn'
+                'generate-btn-mobile'
             );
 
 
@@ -117,34 +111,13 @@ document.addEventListener(
         let templateLoaded = false;
 
 
-        // Ribbon overlay — drawn on top of the user photo
-        const overlayImage =
-            new Image();
-
-
-        overlayImage.src =
-            './assets/hhgoa-overlay.png';
-
-
+        // Ribbon overlay PNG — the "<" chevron drawn on top of the user photo
+        const overlayImage = new Image();
+        overlayImage.src = './assets/hhgoa-overlay.png';
         let overlayLoaded = false;
 
-
-        overlayImage.onload =
-            () => {
-
-                overlayLoaded = true;
-
-            };
-
-
-        overlayImage.onerror =
-            () => {
-
-                console.warn(
-                    'Ribbon overlay image not found: assets/hhgoa-overlay.png'
-                );
-
-            };
+        overlayImage.onload  = () => { overlayLoaded = true; };
+        overlayImage.onerror = () => { console.warn('hhgoa-overlay.png not found'); };
 
 
         templateImage.onload =
@@ -249,21 +222,35 @@ document.addEventListener(
 
 
             // ------------------------------------------------
-            // 3. DIAGONAL RIBBON BANDS WITH NAME + ROLE
+            // 3. OVERLAY RIBBON PNG (chevron shape)
             // ------------------------------------------------
 
-            drawDiagonalRibbons();
+            drawRibbonOverlay();
 
 
             // ------------------------------------------------
-            // 4. BADGE ID
+            // 4. NAME + ROLE TEXT ON THE RIBBON BANDS
+            // ------------------------------------------------
+
+            drawRibbonText();
+
+
+            // ------------------------------------------------
+            // 5. LEFT NAME + ROLE
+            // ------------------------------------------------
+
+            drawLeftText();
+
+
+            // ------------------------------------------------
+            // 6. BADGE ID
             // ------------------------------------------------
 
             drawBadgeId();
 
 
             // ------------------------------------------------
-            // 5. BARCODE
+            // 7. BARCODE
             // ------------------------------------------------
 
             generateBarcode(
@@ -341,14 +328,9 @@ document.addEventListener(
                 userImage.height * scale;
 
 
-            const x =
-                photoX +
-                (photoWidth - width) / 2;
-
-
-            const y =
-                photoY +
-                (photoHeight - height) / 2;
+            // Center the photo perfectly using cover logic
+            const x = photoX + (photoWidth - width) / 2;
+            const y = photoY + (photoHeight - height) / 2;
 
 
             ctx.save();
@@ -369,14 +351,38 @@ document.addEventListener(
 
 
         // ==================================================
-        // DIAGONAL RIBBON BANDS WITH NAME + ROLE
-        //
-        // Draws two parallel diagonal pink sashes across the
-        // photo, filled with repeating "NAME • ROLE" text —
-        // just like the reference image.
+        // RIBBON OVERLAY
+        // Draws the hhgoa-overlay.png chevron ("<" shape)
+        // on top of the user photo, positioned to the left.
         // ==================================================
 
-        function drawDiagonalRibbons() {
+        function drawRibbonOverlay() {
+
+            if (!overlayLoaded) return;
+
+            ctx.save();
+
+            // Draw overlay aligned to left edge, full canvas height
+            ctx.drawImage(
+                overlayImage,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            ctx.restore();
+
+        }
+
+
+        // ==================================================
+        // RIBBON TEXT
+        // Draws the user's name and role repeating along the two
+        // diagonal bands of the chevron overlay.
+        // ==================================================
+
+        function drawRibbonText() {
 
             const name =
                 nameInput.value.trim()
@@ -386,65 +392,129 @@ document.addEventListener(
             const role =
                 roleSelect.value.trim()
                     ? roleSelect.value.trim().toUpperCase()
-                    : 'AI ENGINEER';
+                    : 'YOUR ROLE';
 
-            // Repeating text pattern — matches the reference image style
-            const ribbonText = `${name}  •  ${role}  •  `;
+            const FONT         = 'bold 44px "JetBrains Mono", monospace';
+            const TEXT_COLOR   = '#FFFFFF';
 
-            const RIBBON_COLOR  = '#E9005B';   // hot pink
-            const TEXT_COLOR    = '#FFFFFF';   // white
-            const RIBBON_HEIGHT = 105;         // px, height of each band
-            const ANGLE_DEG     = -12;         // tilt: negative = lower-left to upper-right
-            const ANGLE_RAD     = (ANGLE_DEG * Math.PI) / 180;
+            // Custom tilt angles and offsets matching hhgoa-overlay.png bands exactly
+            const UPPER_ANGLE  =  16.9 * Math.PI / 180;
+            const LOWER_ANGLE  = -17.4 * Math.PI / 180;
 
-            // Cover full rotated canvas diagonal
-            const DIAG = Math.sqrt(
-                canvas.width  * canvas.width +
-                canvas.height * canvas.height
-            );
+            const ANCHOR_X = -5;
+            const ANCHOR_Y = 1110;
 
-            // Two parallel ribbon centers (Y position on canvas)
-            const centers = [
-                canvas.height * 0.42,  // first band  ~42% from top
-                canvas.height * 0.56,  // second band ~56% from top
-            ];
+            // Offset perpendicular to the ribbon line to center it exactly inside the pink path
+            const UPPER_Y_OFFSET = 145;
+            const LOWER_Y_OFFSET = 145; // Fixed typo from original code (-110 -> 110)
+
+            const upperText = `${name}  •  ${role}  •  `;
+            const lowerText = `${role}  •  ${name}  •  `;
+
+            ctx.save();
+            ctx.fillStyle    = TEXT_COLOR;
+            ctx.font         = FONT;
+            ctx.textBaseline = 'middle';
+            ctx.textAlign    = 'left';
+
+            const upperW = ctx.measureText(upperText).width;
+            const lowerW = ctx.measureText(lowerText).width;
+
+            // ── Upper ribbon band: NAME • ROLE ───────────────────────────
+            ctx.save();
+            ctx.translate(ANCHOR_X, ANCHOR_Y);
+            ctx.rotate(-UPPER_ANGLE);
+            for (let offset = 120; offset < 1500; offset += upperW) {
+                ctx.fillText(upperText, offset, UPPER_Y_OFFSET);
+            }
+            ctx.restore();
+
+            // ── Lower ribbon band: ROLE • NAME ───────────────────────────
+            ctx.save();
+            ctx.translate(ANCHOR_X, ANCHOR_Y);
+            ctx.rotate(-LOWER_ANGLE);
+            for (let offset = 120; offset < 1500; offset += lowerW) {
+                ctx.fillText(lowerText, offset, LOWER_Y_OFFSET);
+            }
+            ctx.restore();
+
+            ctx.restore();
+
+        }
+
+
+        // ==================================================
+        // LEFT NAME + ROLE
+        // ==================================================
+
+        function drawLeftText() {
+
+            const name =
+                nameInput.value.trim()
+                    ? nameInput.value.trim().toUpperCase()
+                    : 'YOUR NAME';
+
+            const role =
+                roleSelect.value.trim()
+                    ? roleSelect.value.trim().toUpperCase()
+                    : 'YOUR ROLE';
 
             ctx.save();
 
-            centers.forEach((centerY) => {
+            // Name on left
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#E9005B';
+            ctx.font      = '800 56px "Bricolage Grotesque", sans-serif';
+            ctx.fillText(name, 55, 620);
 
-                ctx.save();
-
-                // Rotate around midpoint of this ribbon's vertical position
-                ctx.translate(canvas.width / 2, centerY);
-                ctx.rotate(ANGLE_RAD);
-
-                // ── Pink band ────────────────────────────────────────────
-                ctx.fillStyle = RIBBON_COLOR;
-                ctx.fillRect(
-                    -DIAG,
-                    -RIBBON_HEIGHT / 2,
-                    DIAG * 2,
-                    RIBBON_HEIGHT
-                );
-
-                // ── Repeating text ───────────────────────────────────────
-                ctx.fillStyle    = TEXT_COLOR;
-                ctx.font         = 'bold 48px "JetBrains Mono", monospace';
-                ctx.textBaseline = 'middle';
-                ctx.textAlign    = 'left';
-
-                const tW = ctx.measureText(ribbonText).width;
-
-                for (let x = -DIAG; x < DIAG; x += tW) {
-                    ctx.fillText(ribbonText, x, 0);
-                }
-
-                ctx.restore();
-
-            });
+            // Role on left
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font      = 'italic 700 30px "JetBrains Mono", monospace';
+            ctx.fillText(role, 55, 670);
 
             ctx.restore();
+
+        }
+
+
+        // ==================================================
+        // BARCODE
+        // ==================================================
+
+        function generateBarcode(callback) {
+
+            if (typeof JsBarcode === 'undefined') {
+                console.warn('JsBarcode not loaded.');
+                return;
+            }
+
+            if (!barcodeSvg) return;
+
+            try {
+                JsBarcode(barcodeSvg, badgeId, {
+                    format: 'CODE128',
+                    width: 2,
+                    height: 55,
+                    displayValue: false,
+                    margin: 0
+                });
+
+                const svgString = new XMLSerializer().serializeToString(barcodeSvg);
+                const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(svgBlob);
+                const barcodeImage = new Image();
+
+                barcodeImage.onload = () => {
+                    ctx.drawImage(barcodeImage, 55, 780, 220, 60);
+                    URL.revokeObjectURL(url);
+                    if (callback) callback();
+                };
+
+                barcodeImage.src = url;
+
+            } catch (error) {
+                console.error('Barcode generation error:', error);
+            }
 
         }
 
@@ -483,141 +553,7 @@ document.addEventListener(
         }
 
 
-        // ==================================================
-        // BARCODE
-        // ==================================================
 
-        function generateBarcode(
-            callback
-        ) {
-
-
-            if (
-                typeof JsBarcode ===
-                'undefined'
-            ) {
-
-                console.warn(
-                    'JsBarcode not loaded.'
-                );
-
-                return;
-
-            }
-
-
-            if (!barcodeSvg) {
-
-                return;
-
-            }
-
-
-            try {
-
-                JsBarcode(
-                    barcodeSvg,
-                    badgeId,
-                    {
-
-                        format:
-                            'CODE128',
-
-                        width:
-                            2,
-
-                        height:
-                            55,
-
-                        displayValue:
-                            false,
-
-                        margin:
-                            0
-
-                    }
-                );
-
-
-                const svgString =
-                    new XMLSerializer()
-                        .serializeToString(
-                            barcodeSvg
-                        );
-
-
-                const svgBlob =
-                    new Blob(
-                        [svgString],
-                        {
-                            type:
-                                'image/svg+xml;charset=utf-8'
-                        }
-                    );
-
-
-                const url =
-                    URL.createObjectURL(
-                        svgBlob
-                    );
-
-
-                const barcodeImage =
-                    new Image();
-
-
-                barcodeImage.onload =
-                    () => {
-
-
-                        /*
-                            BARCODE POSITION
-
-                            Below name/role/badge-id.
-                        */
-
-
-                        ctx.drawImage(
-
-                            barcodeImage,
-
-                            55,
-                            780,
-
-                            220,
-                            60
-
-                        );
-
-
-                        URL.revokeObjectURL(
-                            url
-                        );
-
-
-                        if (callback) {
-
-                            callback();
-
-                        }
-
-                    };
-
-
-                barcodeImage.src =
-                    url;
-
-
-            } catch (error) {
-
-                console.error(
-                    'Barcode generation error:',
-                    error
-                );
-
-            }
-
-        }
 
 
         // ==================================================
@@ -636,14 +572,6 @@ document.addEventListener(
                 canvas.toDataURL(
                     'image/png'
                 );
-
-
-            if (downloadBtn) {
-
-                downloadBtn.disabled =
-                    !userImage;
-
-            }
 
         }
 
@@ -743,7 +671,7 @@ document.addEventListener(
         // ==================================================
 
         async function handleFile(file) {
-            if (!file.type.startsWith('image/')) {
+            if (!file.type.startsWith('image/') && !file.name.toLowerCase().match(/\.(heic|heif)$/)) {
                 alert('Please upload an image.');
                 return;
             }
@@ -751,10 +679,19 @@ document.addEventListener(
             const loadingOverlay = document.getElementById('loading-overlay');
             const loadingText = document.getElementById('loading-text');
             if (loadingOverlay) loadingOverlay.classList.remove('hidden');
-            if (loadingText) loadingText.textContent = 'Removing background...';
+            if (loadingText) loadingText.textContent = 'Processing image...';
 
             try {
-                const resultBlob = await removeBackgroundFast(file, (msg) => {
+                let processFile = file;
+                // Convert HEIC to JPEG if needed
+                if (file.name.toLowerCase().match(/\.(heic|heif)$/) || file.type === 'image/heic' || file.type === 'image/heif') {
+                    if (loadingText) loadingText.textContent = 'Converting HEIC...';
+                    const convertedBlob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.8 });
+                    processFile = new File([convertedBlob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: 'image/jpeg' });
+                }
+
+                if (loadingText) loadingText.textContent = 'Removing background...';
+                const resultBlob = await removeBackgroundFast(processFile, (msg) => {
                     if (loadingText) loadingText.textContent = msg;
                 });
 
@@ -904,158 +841,46 @@ document.addEventListener(
 
 
         // ==================================================
-        // GENERATE
+        // GENERATE ACTION
         // ==================================================
 
-        generateBtn.addEventListener(
-            'click',
-            () => {
+        function triggerGenerate() {
+            const name = nameInput.value.trim();
+            const role = roleSelect.value.trim();
 
+            const missing = [];
+            if (!userImage) missing.push('Photo');
+            if (!name) missing.push('Name');
+            if (!role) missing.push('Role');
 
-                if (!userImage) {
-
-                    alert(
-                        'Please upload your photo first.'
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    !nameInput.value.trim()
-                ) {
-
-                    alert(
-                        'Please enter your name.'
-                    );
-
-                    nameInput.focus();
-
-                    return;
-
-                }
-
-
-                /*
-                    Generate a NEW ID every time the
-                    user presses Generate.
-                */
-
-                badgeId =
-                    generateBadgeId();
-
-
-                /*
-                    Draw everything again.
-                */
-
-                drawBadge();
-
-
-                /*
-                    Give the barcode a moment to render.
-                */
-
-                setTimeout(
-                    () => {
-
-
-                        const finalImage =
-                            canvas.toDataURL(
-                                'image/png'
-                            );
-
-
-                        // ------------------------------------
-                        // SAVE FOR SUCCESS PAGE
-                        // ------------------------------------
-
-                        sessionStorage.setItem(
-                            'generatedBadge',
-                            finalImage
-                        );
-
-
-                        sessionStorage.setItem(
-                            'generatedBadgeName',
-                            nameInput.value.trim()
-                        );
-
-
-                        sessionStorage.setItem(
-                            'generatedBadgeRole',
-                            roleSelect.value.trim()
-                        );
-
-
-                        sessionStorage.setItem(
-                            'generatedBadgeId',
-                            badgeId
-                        );
-
-
-                        // ------------------------------------
-                        // GO TO SUCCESS
-                        // ------------------------------------
-
-                        window.location.href =
-                            'success.html';
-
-
-                    },
-                    300
-                );
-
+            if (missing.length > 0) {
+                alert(`Please fill out all fields before generating: Missing ${missing.join(', ')}.`);
+                return;
             }
-        );
 
+            badgeId = generateBadgeId();
+            drawBadge();
 
-        // ==================================================
-        // DIRECT DOWNLOAD
-        // ==================================================
+            setTimeout(
+                () => {
+                    const finalImage = canvas.toDataURL('image/png');
+                    sessionStorage.setItem('generatedBadge', finalImage);
+                    sessionStorage.setItem('generatedBadgeName', name);
+                    sessionStorage.setItem('generatedBadgeRole', role);
+                    sessionStorage.setItem('generatedBadgeId', badgeId);
+                    window.location.href = 'success.html';
+                },
+                300
+            );
+        }
 
-        downloadBtn.addEventListener(
-            'click',
-            () => {
+        if (generateBtn) {
+            generateBtn.addEventListener('click', triggerGenerate);
+        }
 
-
-                if (!userImage) {
-
-                    return;
-
-                }
-
-
-                const name =
-                    nameInput.value.trim()
-                    || 'Hacker';
-
-
-                const link =
-                    document.createElement(
-                        'a'
-                    );
-
-
-                link.download =
-                    `Hacker_House_Goa_2026_${name
-                        .replace(/\s+/g, '_')
-                    }.png`;
-
-
-                link.href =
-                    canvas.toDataURL(
-                        'image/png'
-                    );
-
-
-                link.click();
-
-            }
-        );
-
+        if (generateBtnMobile) {
+            generateBtnMobile.addEventListener('click', triggerGenerate);
+        }
 
         // ==================================================
         // INITIAL
