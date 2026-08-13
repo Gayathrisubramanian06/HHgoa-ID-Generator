@@ -249,28 +249,21 @@ document.addEventListener(
 
 
             // ------------------------------------------------
-            // 3. RIBBON OVERLAY (drawn in front of photo)
+            // 3. DIAGONAL RIBBON BANDS WITH NAME + ROLE
             // ------------------------------------------------
 
-            drawRibbonOverlay();
-
-
-            // ------------------------------------------------
-            // 4. LEFT NAME + ROLE
-            // ------------------------------------------------
-
-            drawLeftText();
+            drawDiagonalRibbons();
 
 
             // ------------------------------------------------
-            // 5. BADGE ID
+            // 4. BADGE ID
             // ------------------------------------------------
 
             drawBadgeId();
 
 
             // ------------------------------------------------
-            // 6. BARCODE
+            // 5. BARCODE
             // ------------------------------------------------
 
             generateBarcode(
@@ -376,111 +369,80 @@ document.addEventListener(
 
 
         // ==================================================
-        // RIBBON OVERLAY
+        // DIAGONAL RIBBON BANDS WITH NAME + ROLE
+        //
+        // Draws two parallel diagonal pink sashes across the
+        // photo, filled with repeating "NAME • ROLE" text —
+        // just like the reference image.
         // ==================================================
 
-        function drawRibbonOverlay() {
-
-
-            /*
-                Draw the separate ribbon overlay PNG on top
-                of the user photo so the ribbon always
-                appears in front of the person.
-            */
-
-
-            if (!overlayLoaded) {
-                return;
-            }
-
-
-            ctx.save();
-
-
-            // Shift ribbon overlay to the left (negative x moves it left)
-            const ribbonOffsetX = -300;
-
-            ctx.drawImage(
-                overlayImage,
-                ribbonOffsetX,
-                0,
-                canvas.width + Math.abs(ribbonOffsetX),
-                canvas.height
-            );
-
-
-            ctx.restore();
-
-        }
-
-
-        // ==================================================
-        // LEFT NAME + ROLE
-        // ==================================================
-
-        function drawLeftText() {
-
+        function drawDiagonalRibbons() {
 
             const name =
                 nameInput.value.trim()
-                    ? nameInput.value
-                        .trim()
-                        .toUpperCase()
+                    ? nameInput.value.trim().toUpperCase()
                     : 'YOUR NAME';
-
 
             const role =
                 roleSelect.value.trim()
-                    ? roleSelect.value
-                        .trim()
-                        .toUpperCase()
+                    ? roleSelect.value.trim().toUpperCase()
                     : 'AI ENGINEER';
 
+            // Repeating text pattern — matches the reference image style
+            const ribbonText = `${name}  •  ${role}  •  `;
+
+            const RIBBON_COLOR  = '#E9005B';   // hot pink
+            const TEXT_COLOR    = '#FFFFFF';   // white
+            const RIBBON_HEIGHT = 105;         // px, height of each band
+            const ANGLE_DEG     = -12;         // tilt: negative = lower-left to upper-right
+            const ANGLE_RAD     = (ANGLE_DEG * Math.PI) / 180;
+
+            // Cover full rotated canvas diagonal
+            const DIAG = Math.sqrt(
+                canvas.width  * canvas.width +
+                canvas.height * canvas.height
+            );
+
+            // Two parallel ribbon centers (Y position on canvas)
+            const centers = [
+                canvas.height * 0.42,  // first band  ~42% from top
+                canvas.height * 0.56,  // second band ~56% from top
+            ];
 
             ctx.save();
 
+            centers.forEach((centerY) => {
 
-            // ------------------------------------------------
-            // NAME
-            // ------------------------------------------------
+                ctx.save();
 
-            ctx.textAlign =
-                'left';
+                // Rotate around midpoint of this ribbon's vertical position
+                ctx.translate(canvas.width / 2, centerY);
+                ctx.rotate(ANGLE_RAD);
 
+                // ── Pink band ────────────────────────────────────────────
+                ctx.fillStyle = RIBBON_COLOR;
+                ctx.fillRect(
+                    -DIAG,
+                    -RIBBON_HEIGHT / 2,
+                    DIAG * 2,
+                    RIBBON_HEIGHT
+                );
 
-            ctx.fillStyle =
-                '#E9005B';
+                // ── Repeating text ───────────────────────────────────────
+                ctx.fillStyle    = TEXT_COLOR;
+                ctx.font         = 'bold 48px "JetBrains Mono", monospace';
+                ctx.textBaseline = 'middle';
+                ctx.textAlign    = 'left';
 
+                const tW = ctx.measureText(ribbonText).width;
 
-            ctx.font =
-                '800 56px "Bricolage Grotesque", sans-serif';
+                for (let x = -DIAG; x < DIAG; x += tW) {
+                    ctx.fillText(ribbonText, x, 0);
+                }
 
+                ctx.restore();
 
-            ctx.fillText(
-                name,
-                55,
-                620
-            );
-
-
-            // ------------------------------------------------
-            // ROLE
-            // ------------------------------------------------
-
-            ctx.fillStyle =
-                '#FFFFFF';
-
-
-            ctx.font =
-                'italic 700 30px "JetBrains Mono", monospace';
-
-
-            ctx.fillText(
-                role,
-                55,
-                670
-            );
-
+            });
 
             ctx.restore();
 
@@ -789,46 +751,11 @@ document.addEventListener(
             const loadingOverlay = document.getElementById('loading-overlay');
             const loadingText = document.getElementById('loading-text');
             if (loadingOverlay) loadingOverlay.classList.remove('hidden');
-            if (loadingText) loadingText.textContent = 'Loading AI model...';
+            if (loadingText) loadingText.textContent = 'Removing background...';
 
             try {
-
-                // Client-side background removal — no API key needed
-                if (loadingText) loadingText.textContent = 'Removing background (AI)...';
-
-                // Try loading the background removal library
-                let removeBackground;
-                try {
-                    const mod = await import(
-                        'https://esm.run/@imgly/background-removal'
-                    );
-                    removeBackground = mod.removeBackground || mod.default?.removeBackground || mod.default;
-                } catch (importErr) {
-                    console.warn('ESM import failed, trying UMD fallback:', importErr);
-                    // Fallback: load as a script tag
-                    await new Promise((resolve, reject) => {
-                        if (window.BackgroundRemoval) { resolve(); return; }
-                        const s = document.createElement('script');
-                        s.src = 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/background-removal.browser.js';
-                        s.onload = resolve;
-                        s.onerror = reject;
-                        document.head.appendChild(s);
-                    });
-                    removeBackground = window.BackgroundRemoval?.removeBackground;
-                }
-
-                if (typeof removeBackground !== 'function') {
-                    throw new Error('removeBackground function not found in library');
-                }
-
-                const resultBlob = await removeBackground(file, {
-                    output: { format: 'image/png', quality: 1 },
-                    progress: (key, current, total) => {
-                        if (loadingText && total > 0) {
-                            const pct = Math.round((current / total) * 100);
-                            loadingText.textContent = `Removing background… ${pct}%`;
-                        }
-                    }
+                const resultBlob = await removeBackgroundFast(file, (msg) => {
+                    if (loadingText) loadingText.textContent = msg;
                 });
 
                 const url = URL.createObjectURL(resultBlob);
@@ -847,9 +774,100 @@ document.addEventListener(
 
             } catch (error) {
                 console.error('Background removal failed:', error);
-                // Silently fall back — no scary alert
                 loadFallback(file, loadingOverlay);
             }
+        }
+
+
+        // ==================================================
+        // FAST BACKGROUND REMOVAL — MediaPipe Selfie Segmentation
+        // Real-time capable (~5MB model vs 40-100MB for imgly)
+        // Typically processes a photo in under 1 second.
+        // ==================================================
+
+        async function removeBackgroundFast(file, onStatus) {
+
+            return new Promise(async (resolve, reject) => {
+
+                const imgUrl = URL.createObjectURL(file);
+                const img = new Image();
+
+                img.onload = async () => {
+
+                    try {
+
+                        // Load MediaPipe script once
+                        if (!window.SelfieSegmentation) {
+                            if (onStatus) onStatus('Loading AI model (~5 MB)...');
+                            await new Promise((res, rej) => {
+                                const s = document.createElement('script');
+                                s.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js';
+                                s.crossOrigin = 'anonymous';
+                                s.onload = res;
+                                s.onerror = rej;
+                                document.head.appendChild(s);
+                            });
+                        }
+
+                        if (onStatus) onStatus('Removing background...');
+
+                        const seg = new SelfieSegmentation({
+                            locateFile: (f) =>
+                                `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${f}`
+                        });
+
+                        // modelSelection: 0 = general (fast), 1 = landscape (slightly more accurate)
+                        seg.setOptions({ modelSelection: 0 });
+
+                        seg.onResults((results) => {
+
+                            const outCanvas = document.createElement('canvas');
+                            outCanvas.width  = img.naturalWidth;
+                            outCanvas.height = img.naturalHeight;
+                            const outCtx = outCanvas.getContext('2d');
+
+                            // Draw original photo
+                            outCtx.drawImage(img, 0, 0);
+
+                            // Apply segmentation mask: keep only foreground (person)
+                            outCtx.globalCompositeOperation = 'destination-in';
+                            outCtx.drawImage(
+                                results.segmentationMask,
+                                0, 0,
+                                img.naturalWidth,
+                                img.naturalHeight
+                            );
+
+                            outCanvas.toBlob((blob) => {
+                                URL.revokeObjectURL(imgUrl);
+                                seg.close();
+                                if (blob) {
+                                    resolve(blob);
+                                } else {
+                                    reject(new Error('Canvas toBlob returned null'));
+                                }
+                            }, 'image/png');
+
+                        });
+
+                        await seg.send({ image: img });
+
+                    } catch (err) {
+                        URL.revokeObjectURL(imgUrl);
+                        reject(err);
+                    }
+
+                };
+
+                img.onerror = () => {
+                    URL.revokeObjectURL(imgUrl);
+                    reject(new Error('Image failed to load'));
+                };
+
+                img.src = imgUrl;
+
+            });
+
         }
 
         function loadFallback(file, loadingOverlay) {
@@ -874,12 +892,6 @@ document.addEventListener(
         // ==================================================
 
         nameInput.addEventListener(
-            'input',
-            updatePreview
-        );
-
-
-        githubInput.addEventListener(
             'input',
             updatePreview
         );
