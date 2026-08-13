@@ -1,67 +1,1017 @@
-/* Custom styles extending Tailwind CSS for Neo-Brutalist Tropical look */
+/* ==========================================================
+   HACKER HOUSE GOA 2026
+   MAIN STYLES
+========================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;600;700;800&display=swap');
+
+
+/* ==========================================================
+   ROOT
+========================================================== */
 
 :root {
-    --neo-border-color: #0F172A;
+
+    --green:
+        #064D2D;
+
+    --dark-green:
+        #03351F;
+
+    --pink:
+        #E9005B;
+
+    --yellow:
+        #FFD900;
+
+    --white:
+        #FFFFFF;
+
+    --black:
+        #07130D;
+
 }
 
-.neo-shadow {
-    box-shadow: 4px 4px 0px 0px var(--neo-border-color);
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+* {
+
+    box-sizing:
+        border-box;
+
 }
 
-.neo-shadow-lg {
-    box-shadow: 6px 6px 0px 0px var(--neo-border-color);
+
+html {
+
+    scroll-behavior:
+        smooth;
+
 }
 
-.neo-shadow-hover {
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+body {
+
+    margin:
+        0;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    background:
+        var(--green);
+
+    color:
+        white;
+
 }
 
-.neo-shadow-hover:hover {
-    box-shadow: 0px 0px 0px 0px var(--neo-border-color);
-    transform: translate(4px, 4px);
+
+/* ==========================================================
+   NAVBAR
+========================================================== */
+
+.site-nav {
+
+    height:
+        72px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 40px;
+
+    background:
+        #03351F;
+
+    border-bottom:
+        3px solid var(--pink);
+
+    position:
+        relative;
+
+    z-index:
+        100;
+
 }
 
-/* Sticker Rotations */
-.tilt-1 { transform: rotate(-1deg); }
-.tilt-2 { transform: rotate(2.5deg); }
-.tilt-3 { transform: rotate(-3deg); }
-.tilt-4 { transform: rotate(4deg); }
 
-/* Custom Animations */
-@keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
+.nav-logo {
+
+    font-family:
+        'Bricolage Grotesque',
+        sans-serif;
+
+    font-weight:
+        800;
+
+    font-size:
+        24px;
+
+    letter-spacing:
+        1px;
+
 }
 
-.animate-marquee {
-    animation: marquee 25s linear infinite;
+
+.nav-links {
+
+    display:
+        flex;
+
+    gap:
+        30px;
+
 }
 
-/* Custom Webkit scrollbar for Neo-Brutalist look */
-::-webkit-scrollbar {
-    width: 12px;
+
+.nav-links a {
+
+    color:
+        white;
+
+    text-decoration:
+        none;
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    transition:
+        0.2s;
+
 }
 
-::-webkit-scrollbar-track {
-    background: #14140f;
-    border-left: 3px solid var(--neo-border-color);
+
+.nav-links a:hover {
+
+    color:
+        var(--yellow);
+
 }
 
-::-webkit-scrollbar-thumb {
-    background: #E5137A;
-    border: 3px solid var(--neo-border-color);
+
+/* ==========================================================
+   HOME
+========================================================== */
+
+.hero {
+
+    min-height:
+        calc(100vh - 72px);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+    padding:
+        40px;
+
+    background:
+        radial-gradient(circle at center,
+            #0A673C 0%,
+            #064D2D 45%,
+            #03351F 100%);
+
 }
 
-/* Smooth section fade-in */
-.fade-in-section {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+.hero-content {
+
+    max-width:
+        800px;
+
 }
 
-.fade-in-section.visible {
-    opacity: 1;
-    transform: translateY(0);
+
+.hero-small {
+
+    color:
+        var(--yellow);
+
+    font-weight:
+        700;
+
+    font-size:
+        14px;
+
+    letter-spacing:
+        3px;
+
+}
+
+
+.hero h1 {
+
+    font-family:
+        'Bricolage Grotesque',
+        sans-serif;
+
+    font-size:
+        clamp(48px, 8vw, 100px);
+
+    line-height:
+        0.95;
+
+    margin:
+        25px 0;
+
+    font-weight:
+        800;
+
+}
+
+
+.hero-description {
+
+    max-width:
+        650px;
+
+    margin:
+        0 auto 40px;
+
+    line-height:
+        1.7;
+
+    color:
+        rgba(255, 255, 255, 0.8);
+
+}
+
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+.main-button,
+.generate-button,
+.download-button {
+
+    display:
+        inline-flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    border:
+        none;
+
+    background:
+        var(--pink);
+
+    color:
+        white;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-weight:
+        700;
+
+    padding:
+        16px 28px;
+
+    cursor:
+        pointer;
+
+    text-decoration:
+        none;
+
+    box-shadow:
+        5px 5px 0 #000;
+
+    transition:
+        0.15s;
+
+}
+
+
+.main-button:hover,
+.generate-button:hover,
+.download-button:hover {
+
+    transform:
+        translate(3px, 3px);
+
+    box-shadow:
+        2px 2px 0 #000;
+
+}
+
+
+/* ==========================================================
+   GENERATOR
+========================================================== */
+
+.generator-page {
+
+    min-height:
+        100vh;
+
+    background:
+        #03351F;
+
+}
+
+
+.generator-wrapper {
+
+    width:
+        min(1300px, 94%);
+
+    margin:
+        0 auto;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        400px 1fr;
+
+    gap:
+        60px;
+
+    padding:
+        60px 0 80px;
+
+}
+
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.generator-form {
+
+    background:
+        rgba(0, 0, 0, 0.15);
+
+    border:
+        2px solid rgba(255, 255, 255, 0.15);
+
+    padding:
+        32px;
+
+}
+
+
+.section-heading {
+
+    margin-bottom:
+        35px;
+
+}
+
+
+.eyebrow {
+
+    color:
+        var(--yellow);
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        2px;
+
+    margin:
+        0 0 10px;
+
+}
+
+
+.section-heading h1 {
+
+    font-family:
+        'Bricolage Grotesque',
+        sans-serif;
+
+    font-size:
+        38px;
+
+    margin:
+        0 0 10px;
+
+    font-weight:
+        800;
+
+}
+
+
+.section-heading p:last-child {
+
+    color:
+        rgba(255, 255, 255, 0.65);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.6;
+
+}
+
+
+/* ==========================================================
+   FORM GROUP
+========================================================== */
+
+.form-group {
+
+    margin-bottom:
+        24px;
+
+}
+
+
+.form-group label {
+
+    display:
+        block;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        8px;
+
+    color:
+        var(--yellow);
+
+}
+
+
+.form-group input,
+.form-group select {
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    border:
+        2px solid rgba(255, 255, 255, 0.25);
+
+    background:
+        rgba(0, 0, 0, 0.2);
+
+    color:
+        white;
+
+    padding:
+        0 14px;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    outline:
+        none;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus {
+
+    border-color:
+        var(--pink);
+
+}
+
+
+.form-group select option {
+
+    color:
+        black;
+
+}
+
+
+/* ==========================================================
+   UPLOAD
+========================================================== */
+
+.upload-box {
+
+    height:
+        150px;
+
+    border:
+        2px dashed rgba(255, 255, 255, 0.35);
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    cursor:
+        pointer;
+
+    text-align:
+        center;
+
+    transition:
+        0.2s;
+
+}
+
+
+.upload-box:hover {
+
+    border-color:
+        var(--pink);
+
+    background:
+        rgba(233, 0, 91, 0.08);
+
+}
+
+
+.upload-icon {
+
+    font-size:
+        35px;
+
+    color:
+        var(--pink);
+
+}
+
+
+.upload-box small {
+
+    font-size:
+        10px;
+
+    opacity:
+        0.5;
+
+}
+
+
+/* ==========================================================
+   GENERATE
+========================================================== */
+
+.generate-button {
+
+    width:
+        100%;
+
+    margin-top:
+        10px;
+
+}
+
+
+/* ==========================================================
+   PREVIEW
+========================================================== */
+
+.preview-section {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+}
+
+
+.preview-heading {
+
+    width:
+        100%;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    margin-bottom:
+        15px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        1px;
+
+}
+
+
+.preview-dot {
+
+    color:
+        var(--pink);
+
+}
+
+
+/* ==========================================================
+   BADGE PREVIEW
+========================================================== */
+
+.badge-preview {
+
+    width:
+        min(100%, 650px);
+
+    background:
+        #03351F;
+
+    border:
+        2px solid rgba(255, 255, 255, 0.2);
+
+    box-shadow:
+        8px 8px 0 #000;
+
+}
+
+
+.badge-preview img {
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    height:
+        auto;
+
+}
+
+
+/* ==========================================================
+   DOWNLOAD
+========================================================== */
+
+.download-button {
+
+    margin-top:
+        30px;
+
+    width:
+        min(100%, 650px);
+
+}
+
+
+.download-button:disabled {
+
+    opacity:
+        0.4;
+
+    cursor:
+        not-allowed;
+
+}
+
+
+/* ==========================================================
+   SUCCESS PAGE
+========================================================== */
+
+.success-page {
+
+    min-height:
+        100vh;
+
+    background:
+        #03351F;
+
+}
+
+
+.success-wrapper {
+
+    width:
+        min(1000px, 94%);
+
+    margin:
+        0 auto;
+
+    padding:
+        60px 0 100px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+}
+
+
+.success-heading {
+
+    text-align:
+        center;
+
+    margin-bottom:
+        35px;
+
+}
+
+
+.success-heading h1 {
+
+    font-family:
+        'Bricolage Grotesque',
+        sans-serif;
+
+    font-size:
+        clamp(38px, 6vw, 70px);
+
+    margin:
+        0 0 15px;
+
+    font-weight:
+        800;
+
+}
+
+
+.success-heading p:last-child {
+
+    color:
+        rgba(255, 255, 255, 0.7);
+
+}
+
+
+/* ==========================================================
+   SUCCESS BADGE
+========================================================== */
+
+.success-badge-wrapper {
+
+    width:
+        min(650px, 100%);
+
+    box-shadow:
+        8px 8px 0 #000;
+
+}
+
+
+.success-badge {
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    height:
+        auto;
+
+}
+
+
+/* ==========================================================
+   SUCCESS BUTTONS
+========================================================== */
+
+.success-actions {
+
+    width:
+        min(650px, 100%);
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        15px;
+
+    margin-top:
+        30px;
+
+}
+
+
+.secondary-button {
+
+    border:
+        2px solid white;
+
+    background:
+        transparent;
+
+    color:
+        white;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-weight:
+        700;
+
+    padding:
+        15px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.secondary-button:hover {
+
+    background:
+        white;
+
+    color:
+        #03351F;
+
+}
+
+
+.create-another {
+
+    margin-top:
+        30px;
+
+    color:
+        var(--yellow);
+
+    text-decoration:
+        underline;
+
+    font-size:
+        13px;
+
+}
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.site-footer {
+
+    padding:
+        30px;
+
+    text-align:
+        center;
+
+    border-top:
+        2px solid rgba(255, 255, 255, 0.1);
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 850px) {
+
+    .site-nav {
+
+        padding:
+            0 20px;
+
+    }
+
+
+    .nav-links {
+
+        gap:
+            15px;
+
+    }
+
+
+    .generator-wrapper {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            40px;
+
+        padding:
+            35px 0 60px;
+
+    }
+
+
+    .generator-form {
+
+        padding:
+            25px;
+
+    }
+
+
+    .success-actions {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .nav-logo {
+
+        font-size:
+            18px;
+
+    }
+
+
+    .nav-links a {
+
+        font-size:
+            10px;
+
+    }
+
+
+    .hero {
+
+        padding:
+            25px;
+
+    }
+
+
+    .hero h1 {
+
+        font-size:
+            45px;
+
+    }
+
 }
