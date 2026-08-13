@@ -1,115 +1,282 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-        <meta charset="UTF-8">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <title>Hacker House Goa 2026</title>
-
-        <script src="https://cdn.tailwindcss.com"></script>
-
-        <script>
-                tailwind.config = {
-                        theme: {
-                                extend: {
-                                        colors: {
-                                                green: '#064D2D',
-                                                darkGreen: '#03351F',
-                                                pink: '#E9005B',
-                                                yellow: '#FFD900'
-                                        }
-                                }
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Hacker House Goa 2026</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "paper-white": "#F8FAFC",
+                "inverse-primary": "#4ae176",
+                "outline": "#6d7b6c",
+                "primary-fixed-dim": "#4ae176",
+                "on-tertiary-container": "#523d00",
+                "outline-variant": "#bccbb9",
+                "on-error": "#ffffff",
+                "on-tertiary-fixed-variant": "#5a4300",
+                "tertiary": "#785a00",
+                "inverse-on-surface": "#eef0ff",
+                "on-error-container": "#93000a",
+                "on-secondary-container": "#600037",
+                "secondary-fixed-dim": "#ffb0cd",
+                "error": "#ba1a1a",
+                "primary": "#006e2f",
+                "background": "#14140f",
+                "tertiary-container": "#d7a400",
+                "on-tertiary-fixed": "#251a00",
+                "on-primary-fixed": "#002109",
+                "on-tertiary": "#ffffff",
+                "surface-tint": "#006e2f",
+                "on-surface": "#ffffff",
+                "warning-orange": "#F97316",
+                "secondary": "#b4136d",
+                "primary-container": "#22c55e",
+                "on-surface-variant": "#d2d9f4",
+                "on-primary": "#ffffff",
+                "inverse-surface": "#283044",
+                "surface-container-low": "#1c1c17",
+                "surface-dim": "#14140f",
+                "on-secondary": "#ffffff",
+                "error-container": "#ffdad6",
+                "surface-container": "#23231d",
+                "surface-container-high": "#2b2b25",
+                "surface": "#14140f",
+                "on-secondary-fixed": "#3e0022",
+                "secondary-container": "#fd56a7",
+                "secondary-fixed": "#ffd9e4",
+                "electric-cyan": "#06B6D4",
+                "tertiary-fixed": "#ffdf9a",
+                "on-secondary-fixed-variant": "#8c0053",
+                "jungle-dark": "#0f0e0a",
+                "surface-bright": "#3a3933",
+                "on-primary-container": "#004b1e",
+                "primary-fixed": "#6bff8f",
+                "tertiary-fixed-dim": "#f7be1d",
+                "on-background": "#ffffff",
+                "surface-container-highest": "#36362f",
+                "surface-container-lowest": "#0f0e0a",
+                "on-primary-fixed-variant": "#005321",
+                "surface-variant": "#36362f"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "margin-mobile": "16px",
+                "gutter": "24px",
+                "margin-desktop": "48px",
+                "base": "8px",
+                "border-width": "3px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "JetBrains Mono"
+                ],
+                "body-lg": [
+                        "JetBrains Mono"
+                ],
+                "headline-lg-mobile": [
+                        "Bricolage Grotesque"
+                ],
+                "headline-lg": [
+                        "Bricolage Grotesque"
+                ],
+                "headline-xl": [
+                        "Bricolage Grotesque"
+                ],
+                "label-md": [
+                        "JetBrains Mono"
+                ],
+                "label-sm": [
+                        "JetBrains Mono"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
                         }
-                }
-        </script>
-
-        <link rel="stylesheet" href="styles.css">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;600;700;800&display=swap"
-                rel="stylesheet">
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-lg": [
+                        "40px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-xl": [
+                        "64px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.04em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px #000000;
+        }
+        .neo-shadow-lg {
+            box-shadow: 6px 6px 0px 0px #000000;
+        }
+        .neo-shadow-hover:hover {
+            box-shadow: 0px 0px 0px 0px #000000;
+            transform: translate(4px, 4px);
+        }
+        .tilt-1 { transform: rotate(-1deg); }
+        .tilt-2 { transform: rotate(2deg); }
+        .tilt-3 { transform: rotate(-3deg); }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 15s linear infinite;
+        }
+    </style>
 </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-background text-primary-fixed font-headline-lg-mobile text-headline-lg-mobile docked full-width top-0 border-b-border-width border-black shadow-[4px_4px_0px_0px_#000000] flex justify-between items-center px-margin-mobile h-20 w-full z-50 sticky">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center p-2 hover:bg-primary-container hover:text-black transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none border-2 border-transparent hover:border-black rounded-DEFAULT">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<div class="flex items-center relative">
+<div class="h-10 md:h-12">
+<img alt="Hacker House" class="h-full w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALhRO8n9arS7DyszKDBbivtOrjsJwgoh1NYkhoT7aV_JeYHh8kSKjWPKX157GpRQj4JJ4OCnl_tl1sjbt3-lwTWXoHfqupbU0ryx4qI3Mugga58o6goRO7lqFFiv8oFuOdciJwTf6ztfJ9zOsjLCBgMXuX1JhtK5lqeGwhF3vLVVLWEwSK5XF1SOspnZarssnbvrA0qhWfe1KiZ2TPXFcot1Uf2REkrwA-gF_92BAgnHZGCWxyKxLQfmPnWfR0AXCM904">
+</div>
+<div class="absolute -right-4 -top-2 bg-secondary-container border-2 border-black neo-shadow p-1 tilt-2 w-12 h-12 flex items-center justify-center"><img alt="Goa" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCet_shAzgwuoy98a43vypYPnR7fU-B7vc1molKaOcwTsbZVj-IlNolCl5yEdkILkCo-QBbXQv2Wl_rJkpsldL8j1G_beKdM3zto17Y8nvl9ZuGz_McSIBKYPd1IUwSHFJnIXr8qgEZQ1wi3DUFxCY_hOtCoN01SNORkKYfQaVLujj8gQ2a1VsyCctQooR6OhEWO_XdxhsN-YVbHfdy-qhbXXycVn2_h2Ec7o2TCxa-iom4nNYPcXjcPI4CIYZCWuxke-Q"></div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-12 h-12 flex items-center justify-center">
+<img alt="2:47PM Studio" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWA5eubrwnhxKCD1ENlbjPq6hVk7v-P4rwxUeZLMitjf-JkOFazhBtr5Hwv09oatpdWQsowkfB0n9l8U09nL8qAuW1-iDjCjP5tuOfNk5-H9o5A5DhvMTWMlXRq_tExLc85GTdTpWUGFa6Ws39N4nZvIf3hmaJl-Q5qoSgjnvJRQdOvBEBOMsJQxUaYMYRuBQgH7ucssTeET6sKOYF4o1jFrVV6iKVz0_SkUa8_2y3uqvtgiuUhc_IWIfPbjyhGkZ89Cw">
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow relative w-full h-full min-h-[calc(100vh-160px)] flex flex-col items-center justify-center py-margin-desktop px-margin-mobile z-10" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDoKaux9AYW-RE1ZTypGjjX4V_3PiiYtTAiphlOOJHik3LTIbYHLdyMd8GBKSSVpO2h8xgCdMaPv87HEIzpkmbvOCgie5Gykn9_Gn6oKEHlgdc4pccjC6RbiuRHZUWtJJuywTBAkxwKDoyE5wDixHDHEFo0uNVpRAjCeGKe-hVlqvCN4M3MD-Ei5R-YdUQlkvMWgQjiCTXTKY05yjLenAniZuPOns30PNuSX9PCnxfOAyOpX8b037_bApMdE3qkM5zLIIE&quot;); background-size: cover; background-position: center center;"><div class="absolute top-1/4 -left-10 w-[120%] bg-[#E5137A] text-white py-2 border-y-2 border-black tilt-[-2deg] overflow-hidden whitespace-nowrap flex items-center shadow-[0px_4px_0px_0px_#000000] z-10">
+<div class="flex font-label-md text-label-md uppercase w-full justify-center">
+<span class="">RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026 • RSVP OPEN • GOA 2026</span>
 
-
-<body class="bg-[#064D2D] text-white">
-
-
-        <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
-
-        <nav class="site-nav">
-
-                <div class="nav-logo">
-                        HACKER HOUSE
+</div>
+</div>
+<!-- Framing Palms Overlay -->
+<!-- Blur/Scrim for readability if needed, keeping it raw neo-brutalist so maybe just a solid color block -->
+<div class="relative z-20 w-full max-w-4xl mx-auto flex flex-col items-center justify-center gap-8">
+<!-- Sticker Badge -->
+<div class="bg-tertiary-fixed-dim text-on-tertiary-container font-label-md text-label-md uppercase px-4 py-2 border-border-width border-black neo-shadow tilt-3 self-center md:self-start ml-0 md:ml-12 mb-[-20px] z-30">
+                Incoming &gt; 2026
+            </div>
+<!-- Main Card -->
+<div class="w-full max-w-2xl border-border-width border-black neo-shadow-lg p-6 md:p-10 flex flex-col items-center text-center relative z-20" style="background-color: rgba(20, 20, 15, 0.4); backdrop-filter: blur(8px);">
+<!-- Inner decoration sticker -->
+<div class="absolute -top-6 -right-6 bg-secondary-container text-on-secondary-container border-border-width border-black px-3 py-1 font-label-sm text-label-sm tilt-2 neo-shadow">
+                    [ RSVP OPEN ]
                 </div>
-
-                <div class="nav-links">
-
-                        <a href="index.html">
-                                HOME
-                        </a>
-
-                        <a href="generator.html">
-                                GENERATOR
-                        </a>
-
-                </div>
-
-        </nav>
-
-
-        <!-- =====================================================
-         HERO
-    ====================================================== -->
-
-        <main class="hero">
-
-                <div class="hero-content">
-
-                        <p class="hero-small">
-                                2:47 PM STUDIO
-                        </p>
-
-                        <h1>
-                                HACKER HOUSE
-                                <br>
-                                GOA 2026
-                        </h1>
-
-                        <p class="hero-description">
-                                Create your personalized Hacker House Goa 2026
-                                ID card with your photo, name, role and unique
-                                badge ID.
-                        </p>
-
-                        <a href="generator.html" class="main-button">
-
-                                CREATE YOUR ID
-
-                        </a>
-
-                </div>
-
-        </main>
-
-
-        <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-        <footer class="site-footer">
-
-                HACKER HOUSE GOA 2026
-
-        </footer>
+<h1 class="font-headline-xl text-headline-xl text-on-background mb-4 uppercase">
+                    Hacker House <br> <span class="text-secondary-container">Goa 2026</span>
+</h1>
+<div class="flex flex-wrap justify-center gap-4 mb-6 font-label-md text-label-md text-on-surface-variant">
+<div class="flex items-center gap-2 border-2 border-black px-3 py-1 tilt-1 text-on-background" style="background-color: rgba(35, 35, 29, 0.1); backdrop-filter: blur(0.5px);">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                        October 28-31, 2026
+                    </div>
+<div class="flex items-center gap-2 border-2 border-black px-3 py-1 tilt-[-1deg] text-on-background" style="background-color: rgba(35, 35, 29, 0.1); backdrop-filter: blur(0.5px);">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                        Goa, India
+                    </div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface mb-8 max-w-md">
+                    A 4-day creative retreat for builders, hackers, and dreamers under the Goan sun. 
+                </p>
+<!-- Changed button to a link so it navigates correctly, kept all styles identical -->
+<a href="generator.html" class="bg-[#E5137A] text-white font-label-md text-label-md uppercase border-border-width border-black px-8 py-4 neo-shadow neo-shadow-hover transition-all duration-200 tilt-1 flex items-center gap-2 cursor-pointer inline-flex">
+                    Get Started <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<!-- Secondary Sticker -->
+<div class="bg-[#F5C518] text-black font-label-sm text-label-sm uppercase px-4 py-2 border-border-width border-black neo-shadow tilt-[4deg] self-center md:self-end mr-0 md:mr-12 mt-[-20px] z-30">
+<span class="material-symbols-outlined text-[14px] align-middle mr-1">bolt</span> Built for Builders
+            </div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 border-t-border-width border-black shadow-[0px_-4px_0px_0px_#000000] bg-surface pb-safe h-20">
+<ul class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 bg-surface pb-safe">
+<li class="">
+<!-- Updated link to index.html -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full border-2 border-black px-6 py-1 hover:scale-105 transition-transform active:scale-95" href="index.html">
+<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">home</span>
+<span class="font-label-md text-label-md mt-1">Home</span>
+</a>
+</li>
+<li class="">
+<!-- Updated link to generator.html -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full border-2 border-black px-6 py-1 hover:scale-105 transition-transform active:scale-95" href="generator.html">
+<span class="material-symbols-outlined">bolt</span>
+<span class="font-label-md text-label-md mt-1">Generator</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Optional Footer for Desktop (as per layout rules, hiding nav on desktop sometimes, but requested to include) -->
+<footer class="hidden md:flex bg-jungle-dark text-primary-fixed font-label-sm text-label-sm full-width relative border-t-border-width border-black flex-col items-center py-base px-margin-mobile text-center gap-4 w-full z-40">
+<p class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-background">© 2026 Hacker House Goa • Built for Builders</p>
+<div class="flex gap-4">
+<a class="text-surface-variant opacity-80 hover:text-electric-cyan transition-colors duration-200" href="#">Privacy</a>
+<a class="text-surface-variant opacity-80 hover:text-electric-cyan transition-colors duration-200" href="#">Code of Conduct</a>
+</div>
+</footer>
 
 
-</body>
 
-</html>
+
+</body></html>

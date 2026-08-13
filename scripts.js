@@ -111,7 +111,7 @@ document.addEventListener(
 
 
         templateImage.src =
-            './assets/hacker-house-template.png';
+            './assets/hhgoa.png';
 
 
         let templateLoaded = false;
@@ -135,7 +135,7 @@ document.addEventListener(
                 );
 
                 alert(
-                    'Template not found. Please put your final image at: assets/hacker-house-template.png'
+                    'Template not found. Please put your final image at: assets/hhgoa.png'
                 );
 
             };
